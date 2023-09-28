@@ -2,6 +2,7 @@
   "expo": {
     "name": "along-in-care",
     "slug": "along-in-care",
+    "scheme": "along-in-care",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,8 +24,15 @@
         "backgroundColor": "#ffffff"
       }
     },
+    "experiments": {
+      "tsconfigPaths": true,
+      "typedRoutes": true
+    },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
