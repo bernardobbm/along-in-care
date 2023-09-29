@@ -3,6 +3,12 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}', './src/app/**/*.tsx'],
   theme: {
     extend: {
+      fontFamily: {
+        title: 'Inter_700Bold',
+        body: 'Inter_400Regular',
+        alt: 'RobotoCondensed_400Regular',
+      },
+
       colors: {
         gray: {
           50: '#eaeaea',
@@ -17,7 +23,7 @@ module.exports = {
           900: '#121215',
         },
       },
-      plugins: [],
     },
+    plugins: [],
   },
 }
