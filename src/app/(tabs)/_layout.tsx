@@ -12,6 +12,7 @@ export default function Layout() {
       <StatusBar style="light" backgroundColor="#121215" />
 
       <Tabs
+        initialRouteName="home"
         screenOptions={{
           headerShown: false,
 
@@ -49,9 +50,13 @@ export default function Layout() {
         />
 
         <Tabs.Screen
-          name="newCare"
+          name="redirectPage"
           options={{
             title: '',
+
+            tabBarStyle: {
+              display: 'none',
+            },
 
             tabBarIcon: ({ size, color }) => (
               <NewRegistrationButton size={size} color={color} />
