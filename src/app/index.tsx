@@ -1,9 +1,14 @@
 import { AntDesign } from '@expo/vector-icons'
 import { Link, SplashScreen } from 'expo-router'
-import { StatusBar } from 'expo-status-bar'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { StatusBar, Text, TouchableOpacity, View } from 'react-native'
 
-import { Inter_400Regular, Inter_700Bold } from '@expo-google-fonts/inter'
+import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+} from '@expo-google-fonts/inter'
+
 import {
   RobotoCondensed_400Regular,
   useFonts,
@@ -16,6 +21,8 @@ export default function Login() {
   const [hasLoadedFonts] = useFonts({
     RobotoCondensed_400Regular,
     Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
     Inter_700Bold,
   })
 
@@ -34,7 +41,8 @@ export default function Login() {
       className="flex-1 items-center gap-12 bg-gray-900"
       onLayout={onLayoutRootView}
     >
-      <StatusBar style="auto" backgroundColor="#1c6aa3" />
+      <StatusBar barStyle="light-content" backgroundColor="#1c6aa3" />
+
       <View className="h-[420px] w-[100vw] items-center justify-center gap-y-10 rounded-b-[50px] bg-[#1c6aa3] px-8">
         {/* substituir por ícone */}
         <View
@@ -52,11 +60,11 @@ export default function Login() {
         </Text>
       </View>
 
-      <Text className="text-center font-body text-lg text-gray-50">
-        Cadastre-se utilizando uma conta Google já existente
+      <Text className="px-5 text-center font-body text-lg text-gray-50">
+        Entre ou cadastre-se utilizando uma conta Google já existente
       </Text>
 
-      <Link href={'/(tabs)/home'} asChild>
+      <Link href="/(tabs)/home" asChild>
         <TouchableOpacity
           className="w-fit flex-row items-center gap-x-5 rounded-xl bg-gray-700 px-5 py-3"
           activeOpacity={0.7}
