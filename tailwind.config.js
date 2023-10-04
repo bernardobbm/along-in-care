@@ -1,11 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{js,jsx,ts,tsx}', './src/app/**/*.tsx'],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       fontFamily: {
         title: 'Inter_700Bold',
         body: 'Inter_400Regular',
+        body_semibold: 'Inter_600SemiBold',
+        label: 'Inter_500Medium',
         alt: 'RobotoCondensed_400Regular',
       },
 
