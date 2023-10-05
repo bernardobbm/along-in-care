@@ -1,11 +1,11 @@
 import { AntDesign } from '@expo/vector-icons'
 import { ScrollView } from 'react-native'
 
-import { Form } from '../components/Form'
 import { Header } from '../components/Header'
 import { HeaderButton } from '../components/HeaderButton'
+import { Form } from '../components/NewCareFormComponents'
 
-export default function NewCareForm() {
+export function NewCareForm() {
   return (
     <ScrollView className="bg-gray-900" showsVerticalScrollIndicator={false}>
       <Header
@@ -33,8 +33,20 @@ export default function NewCareForm() {
           <Form.TextInput placeholder="Descreva o processo deste cuidado" />
         </Form.Field>
 
+        <Form.DateField>
+          <Form.Field>
+            <Form.Label>Data de Inicio:</Form.Label>
+            <Form.StartsAt />
+          </Form.Field>
+
+          <Form.Field>
+            <Form.Label>Data de Finalização:</Form.Label>
+            <Form.StartsAt />
+          </Form.Field>
+        </Form.DateField>
+
         <Form.Field>
-          <Form.Label>Data de Inicio:</Form.Label>
+          <Form.IsContinuous />
         </Form.Field>
       </Form.Root>
     </ScrollView>
