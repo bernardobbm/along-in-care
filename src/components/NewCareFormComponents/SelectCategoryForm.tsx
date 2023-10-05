@@ -20,6 +20,7 @@ export function SelectCategoryForm() {
           label="Medicação"
           value="medicação"
         />
+
         <Picker.Item
           style={{
             backgroundColor: '#28282d',
@@ -28,6 +29,7 @@ export function SelectCategoryForm() {
           label="Higiene"
           value="higiene"
         />
+
         <Picker.Item
           style={{
             backgroundColor: '#28282d',
@@ -35,6 +37,15 @@ export function SelectCategoryForm() {
           }}
           label="Alimentação"
           value="alimentação"
+        />
+
+        <Picker.Item
+          style={{
+            backgroundColor: '#28282d',
+            color: '#56565a',
+          }}
+          label="Outro"
+          value="outro"
         />
       </Picker>
     </View>
