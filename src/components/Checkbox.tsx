@@ -23,7 +23,7 @@ export function Checkbox({ title, checked = false, ...rest }: CheckboxProps) {
           <Feather name="check" size={20} color={'#eaeaea'} />
         </View>
       ) : (
-        <View className="h-8 w-8 rounded-lg bg-zinc-900" />
+        <View className="h-8 w-8 rounded-lg border-2 border-gray-400 bg-gray-600" />
       )}
 
       <Text className="ml-3 font-body_semibold text-base text-gray-50">

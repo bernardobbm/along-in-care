@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { NewCare } from '../screens/NewCare'
-import NewCareForm from '../screens/newCareForm'
+import { NewCareForm } from '../screens/NewCareForm'
 
 const { Navigator, Screen } = createNativeStackNavigator()
 

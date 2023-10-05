@@ -47,7 +47,7 @@ export function NewCareSelectDays() {
         </View>
       </View>
 
-      <View className="mb-10 flex-row justify-around">
+      <View className="mb-10 flex-row justify-between">
         <TouchableOpacity
           className="mt-6 h-12 w-36 flex-row items-center justify-center rounded-md bg-red-600/80"
           activeOpacity={0.7}
