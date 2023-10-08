@@ -1,12 +1,22 @@
+import { Control } from 'react-hook-form'
+
+import { NewCareFormData } from '../../screens/NewCareForm'
+import { AffirmativeButtonForm } from './AffirmativeButtonForm'
+import { ButtonFieldForm } from './ButtonFieldForm'
+import { CancelButtonForm } from './CancelButtonForm'
 import { DateFieldForm } from './DateFieldForm'
-import { EndsAtFieldForm } from './EndsAtFieldForm'
 import { FieldForm } from './FieldForm'
 import { IsContinuousFieldForm } from './IsContinuousFieldForm'
 import { LabelForm } from './LabelForm'
 import { RootForm } from './RootForm'
 import { SelectCategoryForm } from './SelectCategoryForm'
-import { StartsAtFieldForm } from './StartsAtFieldForm'
+import { SelectDateFieldForm } from './SelectDateFiedlForm'
 import { TextInputForm } from './TextInputForm'
+
+export type FormFieldHookForm = {
+  control: Control<NewCareFormData>
+  errors?: string
+}
 
 export const Form = {
   Root: RootForm,
@@ -15,7 +25,10 @@ export const Form = {
   TextInput: TextInputForm,
   SelectCategory: SelectCategoryForm,
   DateField: DateFieldForm,
-  StartsAt: StartsAtFieldForm,
-  EndsAt: EndsAtFieldForm,
+  StartsAt: SelectDateFieldForm,
+  EndsAt: SelectDateFieldForm,
   IsContinuous: IsContinuousFieldForm,
+  ButtonField: ButtonFieldForm,
+  AffirmativeButton: AffirmativeButtonForm,
+  CancelButton: CancelButtonForm,
 }
