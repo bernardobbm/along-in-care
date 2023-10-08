@@ -24,10 +24,6 @@
         "backgroundColor": "#ffffff"
       }
     },
-    "experiments": {
-      "tsconfigPaths": true,
-      "typedRoutes": true
-    },
     "web": {
       "favicon": "./assets/favicon.png"
     },
