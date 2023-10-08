@@ -6,5 +6,5 @@ interface FieldFormProps {
 }
 
 export function FieldForm({ children }: FieldFormProps) {
-  return <View className="my-3">{children}</View>
+  return <View className="my-2">{children}</View>
 }

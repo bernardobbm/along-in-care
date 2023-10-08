@@ -7,6 +7,8 @@ interface DateFieldFormProps {
 
 export function DateFieldForm({ children }: DateFieldFormProps) {
   return (
-    <View className="flex-row items-center justify-between">{children}</View>
+    <View className="my-2 flex-row items-start justify-between">
+      {children}
+    </View>
   )
 }
