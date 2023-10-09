@@ -2,6 +2,7 @@ import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 import dayjs from 'dayjs'
 import { Controller } from 'react-hook-form'
 import { Text, TouchableOpacity, View } from 'react-native'
+
 import { FormFieldHookForm } from '.'
 import { ErrorMessage } from './ErrorMessageForm'
 
@@ -16,31 +17,20 @@ export function SelectDateFieldForm({
   errors,
   control,
 }: SelectDateFieldForm) {
-  const userTimeZoneDiff = Number(new Date().getTimezoneOffset() / 60)
-
-  const todayWithActualHour = dayjs(new Date())
-    .subtract(userTimeZoneDiff, 'hour')
-    .startOf('hour')
-    .toDate()
-
   function handleDateSelect(dateType: DateType, date: Date) {
-    const startOfDay = dayjs(date).startOf('day').toDate()
+    const actualDate = dayjs(new Date(Date.now())).startOf('hour')
 
-    const endOfDay = dayjs(date).endOf('day').startOf('hour').toDate()
-
-    const actualDate = dayjs(new Date(Date.now())).startOf('minute')
-
-    const isDateEqualNow = dayjs(date).startOf('minute').isSame(actualDate)
+    const isDateEqualNow = dayjs(date).startOf('hour').isSame(actualDate)
 
     if (dateType === 'startsAt' && isDateEqualNow) {
-      return todayWithActualHour
+      return dayjs(date).startOf('hour').toDate() // today with actual hour
     }
 
     if (dateType === 'endsAt') {
-      return endOfDay
+      return dayjs(date).endOf('day').startOf('hour').toDate() // end of day of the day selected
     }
 
-    return startOfDay
+    return dayjs(date).startOf('day').toDate() // start of day of the day selected
   }
 
   return (
@@ -55,7 +45,7 @@ export function SelectDateFieldForm({
               onPress={() => {
                 DateTimePickerAndroid.open({
                   minimumDate: new Date(),
-                  value: value || todayWithActualHour,
+                  value: value || new Date(),
 
                   onChange: (_, date) => {
                     if (date) {
