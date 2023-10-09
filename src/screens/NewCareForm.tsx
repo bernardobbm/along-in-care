@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigation } from '@react-navigation/native'
 import dayjs from 'dayjs'
 import { FormProvider, useForm } from 'react-hook-form'
-import { ScrollView, View } from 'react-native'
+import { ScrollView, Text, View } from 'react-native'
 import { z } from 'zod'
 
 import { AlimentationForm } from '../components/CareTypeForms/AlimentationForm'
@@ -13,6 +13,7 @@ import { MedicationForm } from '../components/CareTypeForms/MedicationForm'
 import { Header } from '../components/Header'
 import { HeaderButton } from '../components/HeaderButton'
 import { Form } from '../components/NewCareFormComponents'
+import { SelectCareDays } from '../components/SelectCareDays'
 
 const userTimeZoneDiff = new Date().getTimezoneOffset() / 60
 
@@ -23,13 +24,26 @@ const today = dayjs(new Date())
 
 const newCareFormSchema = z
   .object({
+    careDays: z.array(z.number().min(0).max(6)).min(1, {
+      message:
+        'É necessário informar ao menos um dia para realização do cuidado',
+    }),
+
     category: z.enum(['medicação', 'alimentação', 'higiene', 'outro']),
 
-    title: z.string({ required_error: 'Campo "Título" é obrigatório' }).trim(),
+    title: z
+      .string({ required_error: 'Campo "Descrição" é obrigatório' })
+      .trim()
+      .min(1, {
+        message: 'Campo "Título" é obrigatório',
+      }),
 
     description: z
       .string({ required_error: 'Campo "Descrição" é obrigatório' })
-      .trim(),
+      .trim()
+      .min(1, {
+        message: 'Campo "Descrição" é obrigatório',
+      }),
 
     startsAt: z.coerce.date().min(today, {
       message: 'Selecione uma data de inicio válida',
@@ -76,26 +90,27 @@ export function NewCareForm() {
     resolver: zodResolver(newCareFormSchema),
   })
 
-  function handleNewCareFormSubmit({
-    category,
-    title,
-    description,
-    startsAt,
-    endsAt,
-    isContinuous,
-  }: NewCareFormData) {
+  function handleNewCareFormSubmit(form: NewCareFormData) {
     const data = {
-      category,
-      title,
-      description,
-      startsAt: dayjs(startsAt).subtract(userTimeZoneDiff, 'hour').toDate(),
-      endsAt: !isContinuous
-        ? dayjs(endsAt).subtract(userTimeZoneDiff, 'hour').toDate()
+      careDays: form.careDays,
+      category: form.category,
+      title: form.title,
+      description: form.description,
+      startsAt: dayjs(form.startsAt)
+        .subtract(userTimeZoneDiff, 'hour')
+        .toDate(),
+      endsAt: !form.isContinuous
+        ? dayjs(form.endsAt).subtract(userTimeZoneDiff, 'hour').toDate()
         : null,
-      isContinuous,
+      isContinuous: form.isContinuous,
     }
 
     console.log(data)
+
+    // navigation.reset({
+    //   index: 0,
+    //   routes: [{ name: 'Home' }],
+    // })
   }
 
   const typeForm = form.watch('category')
@@ -107,6 +122,12 @@ export function NewCareForm() {
         button={
           <HeaderButton
             icon={<AntDesign name="arrowleft" color={'#eaeaea'} size={24} />}
+            onPress={() =>
+              navigation.reset({
+                index: 0,
+                routes: [{ name: 'Home' }],
+              })
+            }
           />
         }
       />
@@ -114,6 +135,12 @@ export function NewCareForm() {
       <ScrollView showsVerticalScrollIndicator={false}>
         <FormProvider {...form}>
           <Form.Root>
+            <Text className="font-label text-lg text-gray-50">
+              Selecione os dias para o cuidado:
+            </Text>
+
+            <SelectCareDays />
+
             <Form.Field>
               <Form.Label>Categoria:</Form.Label>
               <Form.SelectCategory
