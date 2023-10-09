@@ -7,7 +7,7 @@ import { View } from 'react-native'
 import { NewRegistrationButton } from '../components/NewRegistrationButton'
 import { Home } from '../screens/Home'
 import { Prescriptions } from '../screens/Prescriptions'
-import { CareRoutes } from './newCare.routes'
+import { CareRoutes } from './care.routes'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
