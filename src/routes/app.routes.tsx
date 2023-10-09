@@ -7,7 +7,7 @@ import { View } from 'react-native'
 import { NewRegistrationButton } from '../components/NewRegistrationButton'
 import { Home } from '../screens/Home'
 import { Prescriptions } from '../screens/Prescriptions'
-import { NewCareRoutes } from './newCare.routes'
+import { CareRoutes } from './newCare.routes'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -53,7 +53,7 @@ export function AppRoutes() {
 
         <Screen
           name="AppNewCare"
-          component={NewCareRoutes}
+          component={CareRoutes}
           options={{
             title: '',
             tabBarIcon: ({ color, size }) => (
