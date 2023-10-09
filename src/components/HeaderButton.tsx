@@ -1,16 +1,13 @@
-import { useNavigation } from '@react-navigation/native'
 import { ReactNode } from 'react'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 
-interface HeaderButtonProps {
+type HeaderButtonProps = TouchableOpacityProps & {
   icon: ReactNode
 }
 
-export function HeaderButton({ icon }: HeaderButtonProps) {
-  const navigation = useNavigation()
-
+export function HeaderButton({ icon, ...rest }: HeaderButtonProps) {
   return (
-    <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.goBack()}>
+    <TouchableOpacity activeOpacity={0.7} {...rest}>
       {icon}
     </TouchableOpacity>
   )
