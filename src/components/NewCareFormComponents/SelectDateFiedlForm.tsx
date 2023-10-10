@@ -51,8 +51,6 @@ export function SelectDateFieldForm({
                     if (date) {
                       const selectedDate = handleDateSelect(name, date)
 
-                      console.log(selectedDate)
-
                       onChange(selectedDate)
                     }
                   },
@@ -63,9 +61,15 @@ export function SelectDateFieldForm({
                 errors ? 'border-[#e83f5b]' : 'border-gray-400'
               }`}
             >
-              <Text className="font-label text-base text-gray-400">
-                {value ? dayjs(value).format('DD-MM-YYYY') : 'DD-MM-AAAA'}
-              </Text>
+              {value ? (
+                <Text className="font-label text-base text-gray-50">
+                  {dayjs(value).format('DD-MM-YYYY')}
+                </Text>
+              ) : (
+                <Text className="font-label text-base text-gray-400">
+                  DD-MM-AAAA
+                </Text>
+              )}
             </TouchableOpacity>
 
             {errors && <ErrorMessage>{errors}</ErrorMessage>}
