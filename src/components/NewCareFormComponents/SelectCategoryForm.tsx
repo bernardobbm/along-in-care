@@ -33,6 +33,7 @@ export function SelectCategoryForm({
                   key={category}
                   style={{
                     backgroundColor: '#28282d',
+                    fontSize: 18,
                     color: '#eaeaea',
                   }}
                   label={category}
