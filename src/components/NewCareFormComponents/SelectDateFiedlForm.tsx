@@ -64,7 +64,7 @@ export function SelectDateFieldForm({
               }`}
             >
               <Text className="font-label text-base text-gray-400">
-                {value ? dayjs(value).format('DD-MM-YYYY') : 'DD-MM-YYYY'}
+                {value ? dayjs(value).format('DD-MM-YYYY') : 'DD-MM-AAAA'}
               </Text>
             </TouchableOpacity>
 
