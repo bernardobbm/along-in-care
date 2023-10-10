@@ -38,7 +38,7 @@ export function DefaultForm({ children }: DefaultForm) {
         />
       </Form.Field>
 
-      <Form.DateField>
+      <Form.TwoColumnField>
         <Form.Field>
           <Form.Label>Data de Inicio:</Form.Label>
           <Form.StartsAt
@@ -58,7 +58,7 @@ export function DefaultForm({ children }: DefaultForm) {
             />
           </Form.Field>
         )}
-      </Form.DateField>
+      </Form.TwoColumnField>
 
       <Form.Field>
         <Form.IsContinuous control={control} />
