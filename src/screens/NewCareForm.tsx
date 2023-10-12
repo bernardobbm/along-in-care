@@ -45,6 +45,12 @@ const newCareFormSchema = z
         message: 'Campo "Descrição" é obrigatório',
       }),
 
+    scheduleType: z.enum(['fixo', 'variável']),
+
+    schedule: z.coerce
+      .number({ invalid_type_error: 'Digite um valor válido (apenas números)' })
+      .max(23, { message: 'O limite do horário é de 23 horas' }),
+
     startsAt: z.coerce.date().min(today, {
       message: 'Selecione uma data de inicio válida',
     }),
@@ -80,6 +86,19 @@ const newCareFormSchema = z
         'A data de finalização precisa ser igual ou após a data de inicio',
     },
   )
+  .refine(
+    ({ scheduleType, schedule }) => {
+      if (scheduleType === 'variável') {
+        return schedule > 0
+      }
+
+      return true
+    },
+    {
+      message: 'O intervalo de horas tem que ser de no mínimo 1 hora',
+      path: ['schedule'],
+    },
+  )
 
 export type NewCareFormData = z.infer<typeof newCareFormSchema>
 
@@ -96,6 +115,8 @@ export function NewCareForm() {
       category: form.category,
       title: form.title,
       description: form.description,
+      scheduleType: form.scheduleType,
+      schedule: form.schedule,
       startsAt: dayjs(form.startsAt)
         .subtract(userTimeZoneDiff, 'hour')
         .toDate(),
