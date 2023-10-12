@@ -1,4 +1,5 @@
 import { Controller } from 'react-hook-form'
+
 import { FormFieldHookForm } from '.'
 import { Checkbox } from '../Checkbox'
 
@@ -9,7 +10,6 @@ export function IsContinuousFieldForm({ control }: FormFieldHookForm) {
       control={control}
       render={({ field: { value = false, onChange } }) => (
         <Checkbox
-          size="sm"
           title="É contínuo?"
           checked={value}
           onPress={() => onChange(!value)}
