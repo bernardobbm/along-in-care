@@ -32,7 +32,7 @@ const newCareFormSchema = z
     category: z.enum(['medicação', 'alimentação', 'higiene', 'outro']),
 
     title: z
-      .string({ required_error: 'Campo "Descrição" é obrigatório' })
+      .string({ required_error: 'Campo "Título" é obrigatório' })
       .trim()
       .min(1, {
         message: 'Campo "Título" é obrigatório',
@@ -47,12 +47,29 @@ const newCareFormSchema = z
 
     scheduleType: z.enum(['fixo', 'variável']),
 
-    schedule: z.coerce
-      .number({ invalid_type_error: 'Digite um valor válido (apenas números)' })
-      .max(23, { message: 'O limite do horário é de 23 horas' }),
+    schedule: z
+      .string({
+        required_error: 'Campo "Horário" é obrigatório',
+      })
+      .transform((value, ctx) => {
+        const parsedValue = parseInt(value)
+
+        if (isNaN(parsedValue)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: 'Digite um horário válido (apenas números)',
+          })
+
+          return z.NEVER
+        }
+        return parsedValue
+      })
+      .refine((value) => value <= 23, {
+        message: 'O limite para os horário é de 23 horas',
+      }),
 
     startsAt: z.coerce.date().min(today, {
-      message: 'Selecione uma data de inicio válida',
+      message: 'Digite uma data de início para o cuidado',
     }),
 
     endsAt: z.coerce.date().nullable(),
@@ -95,7 +112,8 @@ const newCareFormSchema = z
       return true
     },
     {
-      message: 'O intervalo de horas tem que ser de no mínimo 1 hora',
+      message:
+        'O intervalo de horas para horários variáveis devem ser de no mínimo 1 hora',
       path: ['schedule'],
     },
   )
