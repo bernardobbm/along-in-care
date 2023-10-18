@@ -45,7 +45,7 @@ export function SelectDateFieldForm({
               onPress={() => {
                 DateTimePickerAndroid.open({
                   minimumDate: new Date(),
-                  value: value || new Date(),
+                  value: value ?? new Date(),
 
                   onChange: (_, date) => {
                     if (date) {
