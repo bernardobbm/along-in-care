@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Form } from '../../components/NewCareFormComponents'
 import { NewCareFormData } from '../../screens/NewCareForm'
+import { ScheduleFrequency } from '../NewCareFormComponents/ScheduleFrequency'
 
 type DefaultForm = {
   children?: ReactNode
@@ -36,6 +37,12 @@ export function DefaultForm({ children }: DefaultForm) {
           control={control}
           placeholder="Descreva o processo deste cuidado"
         />
+      </Form.Field>
+
+      <Form.Field>
+        <Form.Label>Horário:</Form.Label>
+
+        <ScheduleFrequency />
       </Form.Field>
 
       <Form.TwoColumnField>
