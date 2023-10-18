@@ -22,6 +22,11 @@ const today = dayjs(new Date())
   .subtract(userTimeZoneDiff, 'hours')
   .toDate()
 
+const tomorrow = dayjs(today)
+  .month(today.getDay() + 1)
+  .startOf('day')
+  .toDate()
+
 const newCareFormSchema = z
   .object({
     careDays: z.array(z.number().min(0).max(6)).min(1, {
@@ -72,9 +77,19 @@ const newCareFormSchema = z
       message: 'Digite uma data de início para o cuidado',
     }),
 
-    endsAt: z.coerce.date().nullable(),
+    endsAt: z.coerce.date().nullable().default(null),
 
     isContinuous: z.boolean().default(false),
+
+    medication: z
+      .object({
+        validity: z
+          .date({ required_error: 'Selecione uma data de validade' })
+          .min(tomorrow, {
+            message: 'É necessário informar uma data de validade',
+          }),
+      })
+      .optional(), // todo: selecionar erros não aparecendo e permitindo o envio do formulário
   })
   .refine(
     ({ isContinuous, endsAt }) => {
@@ -125,6 +140,7 @@ export function NewCareForm() {
 
   const form = useForm<NewCareFormData>({
     resolver: zodResolver(newCareFormSchema),
+    shouldUnregister: true,
   })
 
   function handleNewCareFormSubmit(form: NewCareFormData) {
@@ -142,6 +158,12 @@ export function NewCareForm() {
         ? dayjs(form.endsAt).subtract(userTimeZoneDiff, 'hour').toDate()
         : null,
       isContinuous: form.isContinuous,
+
+      medicationValidity: form.medication
+        ? dayjs(form.medication?.validity)
+            .subtract(userTimeZoneDiff, 'hour')
+            .toDate()
+        : 'não é a categoria de medicação',
     }
 
     console.log(data)
