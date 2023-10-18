@@ -26,7 +26,7 @@ export function SelectCareDays() {
   }
 
   useEffect(() => {
-    setValue('careDays', selectedWeekDays)
+    setValue('careDays', selectedWeekDays.sort())
   }, [setValue, selectedWeekDays])
 
   return (
@@ -35,7 +35,11 @@ export function SelectCareDays() {
       control={control}
       render={() => (
         <View className="mb-2">
-          <View className="mt-4 flex-row items-center justify-around border-b-2 border-t-2 border-gray-300 py-1">
+          <View
+            className={`mt-4 flex-row items-center justify-around border-b-2 border-t-2 py-1 ${
+              errors.careDays ? 'border-[#e83f5b]' : ' border-gray-300'
+            }`}
+          >
             {availableWeekDays.map((weekDay, index) => {
               return (
                 <TouchableOpacity
