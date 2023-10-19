@@ -74,7 +74,7 @@ const newCareFormSchema = z
       }),
 
     startsAt: z.coerce.date().min(today, {
-      message: 'Digite uma data de início para o cuidado',
+      message: 'Selecione uma data de início para o cuidado',
     }),
 
     endsAt: z.coerce.date().nullable().default(null),
