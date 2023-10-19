@@ -1,7 +1,7 @@
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 import dayjs from 'dayjs'
 import { Controller, useFormContext } from 'react-hook-form'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { NewCareFormData } from '../../screens/NewCareForm'
 import { Form } from '../NewCareFormComponents'
 import { ErrorMessage } from '../NewCareFormComponents/ErrorMessageForm'
@@ -63,6 +63,37 @@ export function MedicationForm() {
                   {errors.medication?.validity && (
                     <ErrorMessage>
                       {errors.medication.validity.message}
+                    </ErrorMessage>
+                  )}
+                </View>
+              )}
+            />
+          </Form.Field>
+
+          <Form.Field>
+            <Form.Label>Dosagem:</Form.Label>
+
+            <Controller
+              name="medication.dosage"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <View className="w-40">
+                  <TextInput
+                    className={`items-center rounded-md border-2 border-gray-400 bg-gray-600 px-4 py-3 text-center font-label text-gray-50 placeholder:text-center ${
+                      errors.medication?.dosage
+                        ? 'border-[#e83f5b]'
+                        : 'border-gray-400'
+                    }`}
+                    placeholder="mg - mg/g - ml"
+                    placeholderTextColor="#56565a"
+                    cursorColor={'#eaeaea'}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+
+                  {errors.medication?.dosage && (
+                    <ErrorMessage>
+                      {errors.medication.dosage.message}
                     </ErrorMessage>
                   )}
                 </View>
