@@ -88,8 +88,15 @@ const newCareFormSchema = z
           .min(tomorrow, {
             message: 'É necessário informar uma data de validade',
           }),
+
+        dosage: z
+          .string({ required_error: 'Campo "Dosagem" é obrigatório' })
+          .min(1, { message: 'Campo "Dosagem" é obrigatório' })
+          .regex(/(\d+) ?(mg|ml|mcg|mg\/g)$/i, {
+            message: 'Digite uma dosagem válida',
+          }),
       })
-      .optional(), // todo: selecionar erros não aparecendo e permitindo o envio do formulário
+      .optional(),
   })
   .refine(
     ({ isContinuous, endsAt }) => {
@@ -164,6 +171,8 @@ export function NewCareForm() {
             .subtract(userTimeZoneDiff, 'hour')
             .toDate()
         : 'não é a categoria de medicação',
+
+      dosage: form.medication?.dosage,
     }
 
     console.log(data)
