@@ -22,11 +22,6 @@ const today = dayjs(new Date())
   .subtract(userTimeZoneDiff, 'hours')
   .toDate()
 
-const tomorrow = dayjs(today)
-  .month(today.getDay() + 1)
-  .startOf('day')
-  .toDate()
-
 const newCareFormSchema = z
   .object({
     careDays: z.array(z.number().min(0).max(6)).min(1, {
@@ -83,14 +78,11 @@ const newCareFormSchema = z
 
     medication: z
       .object({
-        validity: z
-          .date({ required_error: 'Selecione uma data de validade' })
-          .min(tomorrow, {
-            message: 'É necessário informar uma data de validade',
-          }),
+        validity: z.date({ required_error: 'Selecione uma data de validade' }),
 
         dosage: z
           .string({ required_error: 'Campo "Dosagem" é obrigatório' })
+          .trim()
           .min(1, { message: 'Campo "Dosagem" é obrigatório' })
           .regex(/(\d+) ?(mg|ml|mcg|mg\/g)$/i, {
             message: 'Digite uma dosagem válida',
