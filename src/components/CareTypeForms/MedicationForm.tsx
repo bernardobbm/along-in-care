@@ -24,14 +24,26 @@ export function MedicationForm() {
           </Form.Field>
 
           <Form.Field>
-            <Form.Label>Dosagem:</Form.Label>
+            <Form.Label>Composição:</Form.Label>
 
-            <Form.MedicationForm.Dosage
+            <Form.MedicationForm.Composition
               control={control}
-              errors={errors.medication?.dosage?.message}
+              errors={errors.medication?.composition?.message}
             />
           </Form.Field>
         </Form.TwoColumnField>
+
+        <Form.Field>
+          <Form.Label>Via de Administração:</Form.Label>
+          <Form.MedicationForm.SelectRouteOfAdministration
+            routesOfAdministration={[
+              'Oral',
+              'Tópico (Pomadas)',
+              'Parenteral (Injeções)',
+            ]}
+            control={control}
+          />
+        </Form.Field>
       </DefaultForm>
     </View>
   )
