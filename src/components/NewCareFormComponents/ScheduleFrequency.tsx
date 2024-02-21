@@ -1,17 +1,12 @@
 import { useState } from 'react'
-import { Controller, useFormContext } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 import { Text, TextInput, View } from 'react-native'
 
-import { NewCareFormData } from '../../screens/NewCareForm'
+import { FormFieldHookForm } from '.'
 import { Checkbox } from '../Checkbox'
 import { ErrorMessage } from './ErrorMessageForm'
 
-export function ScheduleFrequency() {
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext<NewCareFormData>()
-
+export function ScheduleFrequency({ control, errors }: FormFieldHookForm) {
   const [isFixed, setIsFixed] = useState(false)
   const [isVariable, setIsVariable] = useState(true)
 
@@ -75,7 +70,7 @@ export function ScheduleFrequency() {
 
               <TextInput
                 className={`h-8 w-10 rounded-lg border-2 bg-gray-600 px-2 text-center font-body_semibold text-lg text-gray-50  ${
-                  errors.schedule ? 'border-[#e83f5b]' : 'border-gray-600'
+                  errors ? 'border-[#e83f5b]' : 'border-gray-600'
                 }`}
                 value={String(value)}
                 onChangeText={onChange}
@@ -89,9 +84,7 @@ export function ScheduleFrequency() {
           )}
         />
 
-        {errors.schedule && (
-          <ErrorMessage>{errors.schedule.message}</ErrorMessage>
-        )}
+        {errors && <ErrorMessage>{errors}</ErrorMessage>}
       </View>
     </View>
   )

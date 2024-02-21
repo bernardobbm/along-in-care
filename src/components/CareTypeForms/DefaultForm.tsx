@@ -42,7 +42,10 @@ export function DefaultForm({ children }: DefaultForm) {
       <Form.Field>
         <Form.Label>Horário:</Form.Label>
 
-        <ScheduleFrequency />
+        <ScheduleFrequency
+          control={control}
+          errors={errors.schedule?.message}
+        />
       </Form.Field>
 
       <Form.TwoColumnField>
