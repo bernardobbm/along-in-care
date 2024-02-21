@@ -33,26 +33,13 @@ export const newCareFormSchema = z
 
     scheduleType: z.enum(['fixo', 'variável']),
 
-    schedule: z
-      .string({
+    schedule: z.coerce
+      .number({
         required_error: 'Campo "Horário" é obrigatório',
+        invalid_type_error: 'Digite um horário válido (apenas números)',
       })
-      .transform((value, ctx) => {
-        const parsedValue = parseInt(value)
-
-        if (isNaN(parsedValue)) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: 'Digite um horário válido (apenas números)',
-          })
-
-          return z.NEVER
-        }
-        return parsedValue
-      })
-      .refine((value) => value <= 23, {
-        message: 'O limite para os horário é de 23 horas',
-      }),
+      .nonnegative({ message: 'O horário não pode ser um valor negativo' })
+      .max(23, { message: 'O limite para os horários é de 23 horas' }),
 
     startsAt: z.coerce.date().min(today, {
       message: 'Selecione uma data de início para o cuidado',
@@ -66,13 +53,50 @@ export const newCareFormSchema = z
       .object({
         validity: z.date({ required_error: 'Selecione uma data de validade' }),
 
-        dosage: z
-          .string({ required_error: 'Campo "Dosagem" é obrigatório' })
+        administrationRoute: z.enum([
+          'Oral',
+          'Tópico (Pomadas)',
+          'Parenteral (Injeções)',
+        ]),
+
+        composition: z
+          .string({ required_error: 'Campo "Composição" é obrigatório' })
           .trim()
-          .min(1, { message: 'Campo "Dosagem" é obrigatório' })
-          .regex(/(\d+) ?(mg|ml|mcg|mg\/g)$/i, {
-            message: 'Digite uma dosagem válida',
+          .min(1, { message: 'Campo "Composição" é obrigatório' })
+          .regex(/(\d+) ?(mg|ml|mcg|mg\/g|mg\/ml|g\/ml|mcg\/ml)$/i, {
+            message:
+              'Digite uma composição válida, contendo o valor e o tipo de medida',
           }),
+
+        dosage: z.coerce
+          .number({
+            required_error: 'Campo "Dosagem" é obrigatório',
+            invalid_type_error: 'Digite uma dosagem válida (apenas números)',
+          })
+          .positive({
+            message:
+              'A dosagem precisa ter no mínimo 1 (uma) unidade, independente da medida',
+          }),
+
+        measureType: z.enum(['ml', 'comprimido', 'camada']),
+      })
+      .optional(),
+
+    hygiene: z
+      .object({
+        hygieneCategory: z.enum(['']),
+        dedicatedTime: z.coerce.number(),
+      })
+      .optional(),
+
+    alimentation: z
+      .object({
+        meal: z.enum(['Café da manhã', 'Almoço', 'Janta', 'Lanche']),
+        food: z
+          .string({
+            required_error: 'Campo "Alimentos da refeição" é obrigatório',
+          })
+          .min(1, { message: 'Campo "Alimentos da refeição" é obrigatório' }),
       })
       .optional(),
   })
