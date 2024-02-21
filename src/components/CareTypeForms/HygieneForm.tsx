@@ -1,11 +1,27 @@
-import { Text, View } from 'react-native'
+import { useFormContext } from 'react-hook-form'
+import { NewCareFormData } from '../../screens/NewCareForm'
+import { Form } from '../NewCareFormComponents'
 import { DefaultForm } from './DefaultForm'
 
 export function HygieneForm() {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<NewCareFormData>()
+
   return (
-    <View>
-      <Text className="my-4 font-body text-3xl text-gray-50">Higiene</Text>
-      <DefaultForm />
-    </View>
+    <DefaultForm>
+      <Form.Field>
+        <Form.Label>Higiene a se realizar:</Form.Label>
+        <Form.HygieneForm.SelectHygieneCategory
+          control={control}
+          hygieneCategories={['Banho']}
+        />
+      </Form.Field>
+
+      <Form.Field>
+        <Form.Label>Tempo a ser dedicado:</Form.Label>
+      </Form.Field>
+    </DefaultForm>
   )
 }
