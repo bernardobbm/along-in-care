@@ -1,12 +1,17 @@
-import Feather from '@expo/vector-icons/Feather'
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5'
-import Ionicons from '@expo/vector-icons/Ionicons'
+import {
+  Feather,
+  FontAwesome,
+  FontAwesome5,
+  Ionicons,
+} from '@expo/vector-icons/'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { View } from 'react-native'
 
 import { NewRegistrationButton } from '../components/NewRegistrationButton'
 import { Home } from '../screens/Home'
 import { Prescriptions } from '../screens/Prescriptions'
+import { Records } from '../screens/Records'
+import { Settings } from '../screens/Settings'
 import { CareRoutes } from './care.routes'
 
 const { Navigator, Screen } = createBottomTabNavigator()
@@ -52,6 +57,20 @@ export function AppRoutes() {
         />
 
         <Screen
+          name="Registros"
+          component={Records}
+          options={{
+            tabBarIcon: ({ color, size, focused }) => (
+              <FontAwesome
+                name={focused ? 'file-text' : 'file-text-o'}
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+
+        <Screen
           name="AppNewCare"
           component={CareRoutes}
           options={{
@@ -75,6 +94,20 @@ export function AppRoutes() {
               ) : (
                 <Feather name="archive" size={size} color={color} />
               ),
+          }}
+        />
+
+        <Screen
+          name="Configurações"
+          component={Settings}
+          options={{
+            tabBarIcon: ({ color, size, focused }) => (
+              <Ionicons
+                name={focused ? 'settings' : 'settings-outline'}
+                size={size}
+                color={color}
+              />
+            ),
           }}
         />
       </Navigator>
