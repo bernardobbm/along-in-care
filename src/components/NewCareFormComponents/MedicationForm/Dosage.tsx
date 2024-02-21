@@ -8,17 +8,17 @@ export function Dosage({ control, errors }: FormFieldHookForm) {
     <Controller
       name="medication.dosage"
       control={control}
-      render={({ field: { value, onChange } }) => (
-        <View className="w-40">
+      render={({ field: { value = '', onChange } }) => (
+        <View className="mt-2 w-40">
           <TextInput
-            className={`items-center rounded-md border-2 border-gray-400 bg-gray-600 px-4 py-[9.5px] text-center font-label text-base text-gray-50 placeholder:text-center ${
-              errors ? 'border-[#e83f5b]' : 'border-gray-400'
+            className={`h-8 w-10 rounded-lg border-2 bg-gray-600 px-2 text-center font-body_semibold text-lg text-gray-50  ${
+              errors ? 'border-[#e83f5b]' : 'border-gray-600'
             }`}
-            placeholder="mg - mg/g - ml"
-            placeholderTextColor="#56565a"
-            cursorColor="#eaeaea"
+            value={String(value)}
             onChangeText={onChange}
-            value={value}
+            keyboardType="numeric"
+            cursorColor="#eaeaea"
+            maxLength={2}
           />
 
           {errors && <ErrorMessage>{errors}</ErrorMessage>}
