@@ -1,5 +1,3 @@
-import { Control } from 'react-hook-form'
-import { NewCareFormData } from '../../screens/NewCareForm'
 import { AffirmativeButtonForm } from './AffirmativeButtonForm'
 import { ButtonFieldForm } from './ButtonFieldForm'
 import { CancelButtonForm } from './CancelButtonForm'
@@ -18,11 +16,6 @@ import { SelectCategoryForm } from './SelectCategoryForm'
 import { SelectDateFieldForm } from './SelectDateFiedlForm'
 import { TextInputForm } from './TextInputForm'
 import { TwoColumnFieldForm } from './TwoColumnFieldForm'
-
-export type FormFieldHookForm = {
-  control: Control<NewCareFormData>
-  errors?: string
-}
 
 export const Form = {
   Root: RootForm,
