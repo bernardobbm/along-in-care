@@ -1,5 +1,5 @@
+import { useFormikContext } from 'formik'
 import { ReactNode } from 'react'
-import { useFormContext } from 'react-hook-form'
 import { Form } from '../../components/NewCareFormComponents'
 import { NewCareFormData } from '../../screens/NewCareForm'
 import { ScheduleFrequency } from '../NewCareFormComponents/ScheduleFrequency'
@@ -9,13 +9,7 @@ type DefaultForm = {
 }
 
 export function DefaultForm({ children }: DefaultForm) {
-  const {
-    control,
-    formState: { errors },
-    watch,
-  } = useFormContext<NewCareFormData>()
-
-  const isContinuous = watch('isContinuous')
+  const { values } = useFormikContext<NewCareFormData>()
 
   return (
     <>
@@ -23,8 +17,6 @@ export function DefaultForm({ children }: DefaultForm) {
         <Form.Label>Título:</Form.Label>
         <Form.TextInput
           name="title"
-          errors={errors.title && errors.title.message}
-          control={control}
           placeholder="Digite um título para o cuidado"
         />
       </Form.Field>
@@ -33,8 +25,6 @@ export function DefaultForm({ children }: DefaultForm) {
         <Form.Label>Descrição:</Form.Label>
         <Form.TextInput
           name="description"
-          errors={errors.description && errors.description.message}
-          control={control}
           placeholder="Descreva o processo deste cuidado"
         />
       </Form.Field>
@@ -42,36 +32,25 @@ export function DefaultForm({ children }: DefaultForm) {
       <Form.Field>
         <Form.Label>Horário:</Form.Label>
 
-        <ScheduleFrequency
-          control={control}
-          errors={errors.schedule?.message}
-        />
+        <ScheduleFrequency />
       </Form.Field>
 
       <Form.TwoColumnField>
         <Form.Field>
           <Form.Label>Data de Inicio:</Form.Label>
-          <Form.StartsAt
-            name="startsAt"
-            control={control}
-            errors={errors.startsAt && errors.startsAt.message}
-          />
+          <Form.StartsAt name="startsAt" />
         </Form.Field>
 
-        {!isContinuous && (
+        {!values.isContinuous && (
           <Form.Field>
             <Form.Label>Data de Finalização:</Form.Label>
-            <Form.EndsAt
-              name="endsAt"
-              control={control}
-              errors={errors.endsAt && errors.endsAt.message}
-            />
+            <Form.EndsAt name="endsAt" />
           </Form.Field>
         )}
       </Form.TwoColumnField>
 
       <Form.Field>
-        <Form.IsContinuous control={control} />
+        <Form.IsContinuous />
       </Form.Field>
 
       {children}

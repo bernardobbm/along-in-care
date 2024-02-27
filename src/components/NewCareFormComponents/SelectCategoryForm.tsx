@@ -1,49 +1,42 @@
 import { Picker } from '@react-native-picker/picker'
-import { Controller } from 'react-hook-form'
+import { useFormikContext } from 'formik'
 import { View } from 'react-native'
-import { FormFieldHookForm } from '.'
+import { NewCareFormData } from '../../screens/NewCareForm'
 
-type SelectCategoryFormProps = FormFieldHookForm & {
+type SelectCategoryFormProps = {
   categories: string[]
 }
 
-export function SelectCategoryForm({
-  control,
-  categories,
-}: SelectCategoryFormProps) {
+export function SelectCategoryForm({ categories }: SelectCategoryFormProps) {
+  const { handleChange, values } = useFormikContext<NewCareFormData>()
+
   return (
-    <Controller
-      name="category"
-      control={control}
-      render={({ field: { onChange, value } }) => (
-        <View className="h-12 justify-center overflow-hidden rounded-md border-2 border-gray-400 text-base">
-          <Picker
-            dropdownIconColor="#56565a"
-            mode="dropdown"
-            selectedValue={value}
-            onValueChange={onChange}
-            style={{
-              backgroundColor: '#28282d',
-              color: '#eaeaea',
-            }}
-          >
-            {categories.map((category) => {
-              return (
-                <Picker.Item
-                  key={category}
-                  style={{
-                    backgroundColor: '#28282d',
-                    fontSize: 18,
-                    color: '#eaeaea',
-                  }}
-                  label={category}
-                  value={category.toLocaleLowerCase()}
-                />
-              )
-            })}
-          </Picker>
-        </View>
-      )}
-    />
+    <View className="h-12 justify-center overflow-hidden rounded-md border-2 border-gray-400 text-base">
+      <Picker
+        dropdownIconColor="#56565a"
+        mode="dropdown"
+        selectedValue={values.category}
+        onValueChange={handleChange('category')}
+        style={{
+          backgroundColor: '#28282d',
+          color: '#eaeaea',
+        }}
+      >
+        {categories.map((category) => {
+          return (
+            <Picker.Item
+              key={category}
+              style={{
+                backgroundColor: '#28282d',
+                fontSize: 18,
+                color: '#eaeaea',
+              }}
+              label={category}
+              value={category.toLocaleLowerCase()}
+            />
+          )
+        })}
+      </Picker>
+    </View>
   )
 }

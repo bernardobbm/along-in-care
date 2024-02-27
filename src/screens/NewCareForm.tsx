@@ -1,10 +1,8 @@
 import { AntDesign } from '@expo/vector-icons'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigation } from '@react-navigation/native'
-import dayjs from 'dayjs'
-import { FormProvider, useForm } from 'react-hook-form'
+import { Formik } from 'formik'
 import { ScrollView, Text, View } from 'react-native'
-import { z } from 'zod'
+import yup from 'yup'
 
 import { AlimentationForm } from '../components/CareTypeForms/AlimentationForm'
 import { DefaultForm } from '../components/CareTypeForms/DefaultForm'
@@ -16,116 +14,110 @@ import { Form } from '../components/NewCareFormComponents'
 import { SelectCareDays } from '../components/SelectCareDays'
 import { newCareFormSchema } from './validations/new-care-form-fields-validation'
 
-const userTimeZoneDiff = new Date().getTimezoneOffset() / 60
+// const userTimeZoneDiff = new Date().getTimezoneOffset() / 60
 
-export type NewCareFormData = z.infer<typeof newCareFormSchema>
+export type NewCareFormData = yup.InferType<typeof newCareFormSchema>
 
 export function NewCareForm() {
   const navigation = useNavigation()
 
-  const form = useForm<NewCareFormData>({
-    resolver: zodResolver(newCareFormSchema),
-    shouldUnregister: true,
-  })
-
-  function handleNewCareFormSubmit(form: NewCareFormData) {
-    const data = {
-      careDays: form.careDays,
-      category: form.category,
-      title: form.title,
-      description: form.description,
-      scheduleType: form.scheduleType,
-      schedule: form.schedule,
-      startsAt: dayjs(form.startsAt)
-        .subtract(userTimeZoneDiff, 'hour')
-        .toDate(),
-      endsAt: !form.isContinuous
-        ? dayjs(form.endsAt).subtract(userTimeZoneDiff, 'hour').toDate()
-        : null,
-      isContinuous: form.isContinuous,
-
-      medicationValidity: form.medication
-        ? dayjs(form.medication?.validity)
-            .subtract(userTimeZoneDiff, 'hour')
-            .toDate()
-        : 'não é a categoria de medicação',
-
-      dosage: form.medication?.dosage,
-    }
-
-    console.log(data)
-
-    // navigation.reset({
-    //   index: 0,
-    //   routes: [{ name: 'Home' }],
-    // })
+  const formikInitialValues = {
+    careDays: [],
+    category: '',
+    title: '',
+    description: '',
+    scheduleType: 'variável',
+    schedule: '',
+    startsAt: '',
+    endsAt: null,
+    isContinuous: '',
+    medication: {
+      validity: '',
+      composition: '',
+      administrationRoute: '',
+      dosage: '',
+      measureType: '',
+    },
+    hygiene: {
+      hygieneCategory: '',
+    },
+    alimentation: {},
   }
 
-  const typeForm = form.watch('category')
+  function handleNewCareFormSubmit(formData: typeof formikInitialValues) {
+    console.log(formData)
+  }
 
   return (
-    <View className="h-screen bg-gray-900">
-      <Header
-        text="Adicionar novo cuidado"
-        button={
-          <HeaderButton
-            icon={<AntDesign name="arrowleft" color={'#eaeaea'} size={24} />}
-            onPress={() =>
-              navigation.reset({
-                index: 0,
-                routes: [{ name: 'Home' }],
-              })
+    <Formik
+      initialValues={formikInitialValues}
+      onSubmit={handleNewCareFormSubmit}
+      validationSchema={newCareFormSchema}
+    >
+      {({ values, handleSubmit }) => (
+        <View className="h-screen bg-gray-900">
+          <Header
+            text="Adicionar novo cuidado"
+            button={
+              <HeaderButton
+                icon={
+                  <AntDesign name="arrowleft" color={'#eaeaea'} size={24} />
+                }
+                onPress={() =>
+                  navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Home' }],
+                  })
+                }
+              />
             }
           />
-        }
-      />
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <FormProvider {...form}>
-          <Form.Root>
-            <Text className="font-label text-lg text-gray-50">
-              Selecione os dias para o cuidado:
-            </Text>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Form.Root>
+              <Text className="font-label text-lg text-gray-50">
+                Selecione os dias para o cuidado:
+              </Text>
 
-            <SelectCareDays />
+              <SelectCareDays />
 
-            <Form.Field>
-              <Form.Label>Categoria:</Form.Label>
-              <Form.SelectCategory
-                categories={['Medicação', 'Higiene', 'Alimentação', 'Outro']}
-                control={form.control}
-              />
-            </Form.Field>
+              <Form.Field>
+                <Form.Label>Categoria:</Form.Label>
+                <Form.SelectCategory
+                  categories={['Medicação', 'Higiene', 'Alimentação', 'Outro']}
+                />
+              </Form.Field>
 
-            {typeForm === 'medicação' ? (
-              <MedicationForm />
-            ) : typeForm === 'alimentação' ? (
-              <AlimentationForm />
-            ) : typeForm === 'higiene' ? (
-              <HygieneForm />
-            ) : (
-              <DefaultForm />
-            )}
-          </Form.Root>
-        </FormProvider>
-      </ScrollView>
+              {values.category === 'medicação' ? (
+                <MedicationForm />
+              ) : values.category === 'alimentação' ? (
+                <AlimentationForm />
+              ) : values.category === 'higiene' ? (
+                <HygieneForm />
+              ) : (
+                <DefaultForm />
+              )}
+            </Form.Root>
+          </ScrollView>
 
-      <Form.ButtonField>
-        <Form.CancelButton
-          text="Cancelar"
-          onPress={() => {
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'Home' }],
-            })
-          }}
-        />
+          <Form.ButtonField>
+            <Form.CancelButton
+              text="Cancelar"
+              onPress={() => {
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'Home' }],
+                })
+              }}
+            />
 
-        <Form.AffirmativeButton
-          text="Adicionar"
-          onPress={form.handleSubmit(handleNewCareFormSubmit)}
-        />
-      </Form.ButtonField>
-    </View>
+            <Form.AffirmativeButton
+              text="Adicionar"
+              onPress={() => handleSubmit()}
+            />
+          </Form.ButtonField>
+        </View>
+      )}
+    </Formik>
   )
 }

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { z } from 'zod'
+import * as yup from 'yup'
 
 const userTimeZoneDiff = new Date().getTimezoneOffset() / 60
 
@@ -8,136 +8,116 @@ const today = dayjs(new Date())
   .subtract(userTimeZoneDiff, 'hours')
   .toDate()
 
-export const newCareFormSchema = z
-  .object({
-    careDays: z.array(z.number().min(0).max(6)).min(1, {
-      message:
-        'É necessário informar ao menos um dia para realização do cuidado',
+export const newCareFormSchema = yup.object().shape({
+  careDays: yup
+    .array(yup.number().min(0).max(6))
+    .min(1, 'É necessário informar ao menos um dia para realização do cuidado')
+    .required(
+      'É necessário informar ao menos um dia para realização do cuidado',
+    ),
+
+  category: yup
+    .mixed<string>()
+    .oneOf(['medicação', 'alimentação', 'higiene', 'outro']),
+
+  title: yup
+    .string()
+    .trim()
+    .min(1, 'Campo "Título" é obrigatório')
+    .required('Campo "Título" é obrigatório'),
+
+  description: yup
+    .string()
+    .trim()
+    .min(1, 'Campo "Descrição" é obrigatório')
+    .required('Campo "Descrição" é obrigatório'),
+
+  scheduleType: yup.mixed().oneOf(['fixo', 'variável']),
+
+  schedule: yup
+    .number()
+    .typeError('Digite um horário válido (apenas números)')
+    .moreThan(-1, 'O horário não pode ser um valor negativo')
+    .max(23, 'O limite para os horários é de 23 horas')
+    .when('scheduleType', {
+      is: 'variável',
+      then: (schedule) =>
+        schedule.moreThan(
+          0,
+          'O intervalo de horas para horários variáveis devem ser de no mínimo 1 hora',
+        ),
+    })
+    .required('Campo "Horário" é obrigatório'),
+
+  startsAt: yup
+    .date()
+    .min(today, 'Selecione uma data de início para o cuidado')
+    .required('Selecione uma data de início para o cuidado'),
+
+  endsAt: yup
+    .date()
+    .min(
+      yup.ref('startsAt'),
+      'A data de finalização precisa ser igual ou após a data de inicio',
+    )
+    .nullable()
+    .when('isContinuous', {
+      is: false,
+      then: (endsAt) => endsAt.required('Selecione uma data de finalização'),
     }),
 
-    category: z.enum(['medicação', 'alimentação', 'higiene', 'outro']),
+  isContinuous: yup.boolean().default(false),
 
-    title: z
-      .string({ required_error: 'Campo "Título" é obrigatório' })
-      .trim()
-      .min(1, {
-        message: 'Campo "Título" é obrigatório',
-      }),
+  medication: yup
+    .object()
+    .shape({
+      validity: yup.date().required('Selecione uma data de validade'),
 
-    description: z
-      .string({ required_error: 'Campo "Descrição" é obrigatório' })
-      .trim()
-      .min(1, {
-        message: 'Campo "Descrição" é obrigatório',
-      }),
+      administrationRoute: yup
+        .mixed<string>()
+        .oneOf(['Oral', 'Tópico (Pomadas)', 'Parenteral (Injeções)']),
 
-    scheduleType: z.enum(['fixo', 'variável']),
+      composition: yup
+        .string()
+        .trim()
+        .min(1, 'Campo "Composição" é obrigatório')
+        .matches(
+          /(\d+) ?(mg|ml|mcg|mg\/g|mg\/ml|g\/ml|mcg\/ml)$/i,
+          'Digite uma composição válida, contendo o valor e o tipo de medida',
+        )
+        .required('Campo "Composição" é obrigatório'),
 
-    schedule: z.coerce
-      .number({
-        required_error: 'Campo "Horário" é obrigatório',
-        invalid_type_error: 'Digite um horário válido (apenas números)',
-      })
-      .nonnegative({ message: 'O horário não pode ser um valor negativo' })
-      .max(23, { message: 'O limite para os horários é de 23 horas' }),
+      dosage: yup
+        .number()
+        .positive(
+          'A dosagem precisa ter no mínimo 1 (uma) unidade, independente da medida',
+        )
+        .typeError('Digite uma dosagem válida (apenas números)')
+        .required('Campo "Dosagem" é obrigatório'),
 
-    startsAt: z.coerce.date().min(today, {
-      message: 'Selecione uma data de início para o cuidado',
-    }),
+      measureType: yup.mixed<string>().oneOf(['ml', 'comprimido', 'camada']),
+    })
+    .optional()
+    .default({}),
 
-    endsAt: z.coerce.date().nullable().default(null),
+  hygiene: yup
+    .object()
+    .shape({
+      // todo: adicionar mais categorias e validações
+      hygieneCategory: yup.mixed<string>().oneOf(['Banho, Dentes, ...']),
+      dedicatedTime: yup.number(),
+    })
+    .optional()
+    .default({}),
 
-    isContinuous: z.boolean().default(false),
-
-    medication: z
-      .object({
-        validity: z.date({ required_error: 'Selecione uma data de validade' }),
-
-        administrationRoute: z.enum([
-          'Oral',
-          'Tópico (Pomadas)',
-          'Parenteral (Injeções)',
-        ]),
-
-        composition: z
-          .string({ required_error: 'Campo "Composição" é obrigatório' })
-          .trim()
-          .min(1, { message: 'Campo "Composição" é obrigatório' })
-          .regex(/(\d+) ?(mg|ml|mcg|mg\/g|mg\/ml|g\/ml|mcg\/ml)$/i, {
-            message:
-              'Digite uma composição válida, contendo o valor e o tipo de medida',
-          }),
-
-        dosage: z.coerce
-          .number({
-            required_error: 'Campo "Dosagem" é obrigatório',
-            invalid_type_error: 'Digite uma dosagem válida (apenas números)',
-          })
-          .positive({
-            message:
-              'A dosagem precisa ter no mínimo 1 (uma) unidade, independente da medida',
-          }),
-
-        measureType: z.enum(['ml', 'comprimido', 'camada']),
-      })
-      .optional(),
-
-    hygiene: z
-      .object({
-        hygieneCategory: z.enum(['']),
-        dedicatedTime: z.coerce.number(),
-      })
-      .optional(),
-
-    alimentation: z
-      .object({
-        meal: z.enum(['Café da manhã', 'Almoço', 'Janta', 'Lanche']),
-        food: z
-          .string({
-            required_error: 'Campo "Alimentos da refeição" é obrigatório',
-          })
-          .min(1, { message: 'Campo "Alimentos da refeição" é obrigatório' }),
-      })
-      .optional(),
-  })
-  .refine(
-    ({ isContinuous, endsAt }) => {
-      if (!isContinuous) {
-        return endsAt !== null
-      }
-
-      return true
-    },
-    {
-      path: ['endsAt'],
-      message: 'Selecione uma data de finalização',
-    },
-  )
-  .refine(
-    ({ startsAt, endsAt }) => {
-      if (endsAt) {
-        return dayjs(endsAt).isAfter(startsAt)
-      }
-
-      return true
-    },
-    {
-      path: ['endsAt'],
-      message:
-        'A data de finalização precisa ser igual ou após a data de inicio',
-    },
-  )
-  .refine(
-    ({ scheduleType, schedule }) => {
-      if (scheduleType === 'variável') {
-        return schedule > 0
-      }
-
-      return true
-    },
-    {
-      message:
-        'O intervalo de horas para horários variáveis devem ser de no mínimo 1 hora',
-      path: ['schedule'],
-    },
-  )
+  // alimentation: yup
+  //   .object({
+  //     meal: yup.mixed<string>().oneOf(['Café da manhã', 'Almoço', 'Janta', 'Lanche']),
+  //     food: yup
+  //       .string()
+  //       .min(1, 'Campo "Alimentos da refeição" é obrigatório')
+  //       .required('Campo "Alimentos da refeição" é obrigatório'),
+  //   })
+  //   .optional()
+  //   .default({}),
+})
