@@ -1,14 +1,15 @@
 import { Picker } from '@react-native-picker/picker'
 import { useFormikContext } from 'formik'
 import { View } from 'react-native'
-import { NewCareFormData } from '../../screens/NewCareForm'
+import { NewCareFormData, formikInitialValues } from '../../screens/NewCareForm'
 
 type SelectCategoryFormProps = {
   categories: string[]
 }
 
 export function SelectCategoryForm({ categories }: SelectCategoryFormProps) {
-  const { handleChange, values } = useFormikContext<NewCareFormData>()
+  const { setFieldValue, values, resetForm } =
+    useFormikContext<NewCareFormData>()
 
   return (
     <View className="h-12 justify-center overflow-hidden rounded-md border-2 border-gray-400 text-base">
@@ -16,7 +17,13 @@ export function SelectCategoryForm({ categories }: SelectCategoryFormProps) {
         dropdownIconColor="#56565a"
         mode="dropdown"
         selectedValue={values.category}
-        onValueChange={handleChange('category')}
+        onValueChange={(selectedCategory) => {
+          setFieldValue('category', selectedCategory)
+
+          resetForm({
+            values: { ...formikInitialValues, category: selectedCategory },
+          })
+        }}
         style={{
           backgroundColor: '#28282d',
           color: '#eaeaea',
