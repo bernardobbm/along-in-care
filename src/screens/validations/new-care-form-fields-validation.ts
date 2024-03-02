@@ -68,56 +68,71 @@ export const newCareFormSchema = yup.object().shape({
 
   isContinuous: yup.boolean().default(false),
 
-  medication: yup
-    .object()
-    .shape({
-      validity: yup.date().required('Selecione uma data de validade'),
+  medication: yup.object().when('category', {
+    is: 'medicação',
+    then: () =>
+      yup
+        .object()
+        .shape({
+          validity: yup.date().required('Selecione uma data de validade'),
 
-      administrationRoute: yup
-        .mixed<string>()
-        .oneOf(['Oral', 'Tópico (Pomadas)', 'Parenteral (Injeções)']),
+          administrationRoute: yup
+            .mixed<string>()
+            .oneOf(['oral', 'tópico (pomadas)', 'parenteral (injeções)']),
 
-      composition: yup
-        .string()
-        .trim()
-        .min(1, 'Campo "Composição" é obrigatório')
-        .matches(
-          /(\d+) ?(mg|ml|mcg|mg\/g|mg\/ml|g\/ml|mcg\/ml)$/i,
-          'Digite uma composição válida, contendo o valor e o tipo de medida',
-        )
-        .required('Campo "Composição" é obrigatório'),
+          composition: yup
+            .string()
+            .trim()
+            .min(1, 'Campo "Composição" é obrigatório')
+            .matches(
+              /(\d+) ?(mg|ml|mcg|mg\/g|mg\/ml|g\/ml|mcg\/ml)$/i,
+              'Digite uma composição válida, contendo o valor e o tipo de medida',
+            )
+            .required('Campo "Composição" é obrigatório'),
 
-      dosage: yup
-        .number()
-        .positive(
-          'A dosagem precisa ter no mínimo 1 (uma) unidade, independente da medida',
-        )
-        .typeError('Digite uma dosagem válida (apenas números)')
-        .required('Campo "Dosagem" é obrigatório'),
+          dosage: yup
+            .number()
+            .positive(
+              'A dosagem precisa ter no mínimo 1 (uma) unidade, independente da medida',
+            )
+            .typeError('Digite uma dosagem válida (apenas números)')
+            .required('Campo "Dosagem" é obrigatório'),
 
-      measureType: yup.mixed<string>().oneOf(['ml', 'comprimido', 'camada']),
-    })
-    .optional()
-    .default({}),
+          measureType: yup
+            .mixed<string>()
+            .oneOf(['ml', 'comprimido', 'camada']),
+        })
+        .optional(),
+  }),
 
-  hygiene: yup
-    .object()
-    .shape({
-      // todo: adicionar mais categorias e validações
-      hygieneCategory: yup.mixed<string>().oneOf(['Banho, Dentes, ...']),
-      dedicatedTime: yup.number(),
-    })
-    .optional()
-    .default({}),
+  hygiene: yup.object().when('category', {
+    is: 'higiene',
+    then: () =>
+      yup.object().shape({
+        hygieneCategory: yup
+          .mixed<string>()
+          .oneOf(['banho', 'escovação (dentes)', 'lavar o cabelo']),
+        dedicatedTime: yup
+          .number()
+          .min(
+            1,
+            'É necessário que o cuidado tenha pelo menos um minuto de duração',
+          )
+          .required('Campo "Tempo a ser dedicado" é obrigatório'),
+      }),
+  }),
 
-  // alimentation: yup
-  //   .object({
-  //     meal: yup.mixed<string>().oneOf(['Café da manhã', 'Almoço', 'Janta', 'Lanche']),
-  //     food: yup
-  //       .string()
-  //       .min(1, 'Campo "Alimentos da refeição" é obrigatório')
-  //       .required('Campo "Alimentos da refeição" é obrigatório'),
-  //   })
-  //   .optional()
-  //   .default({}),
+  alimentation: yup.object().when('category', {
+    is: 'alimentação',
+    then: () =>
+      yup.object().shape({
+        meal: yup
+          .mixed<string>()
+          .oneOf(['café da manhã', 'almoço', 'janta', 'lanche']),
+        food: yup
+          .string()
+          .min(1, 'Campo "Alimentos da refeição" é obrigatório')
+          .required('Campo "Alimentos da refeição" é obrigatório'),
+      }),
+  }),
 })
