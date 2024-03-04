@@ -1,7 +1,10 @@
 import { AffirmativeButtonForm } from './AffirmativeButtonForm'
+import { FoodsInput } from './AlimentationForm/FoodsInput'
+import { SelectMealType } from './AlimentationForm/SelectMealType'
 import { ButtonFieldForm } from './ButtonFieldForm'
 import { CancelButtonForm } from './CancelButtonForm'
 import { FieldForm } from './FieldForm'
+import { DedicatedTimeInput } from './HygieneForm/DedicatedTimeInput'
 import { SelectHygieneCategory } from './HygieneForm/SelectHygieneCategory'
 import { IsContinuousFieldForm } from './IsContinuousFieldForm'
 import { LabelForm } from './LabelForm'
@@ -13,7 +16,7 @@ import { Validity } from './MedicationForm/Validity'
 import { RootForm } from './RootForm'
 import { ScheduleFrequency } from './ScheduleFrequency'
 import { SelectCategoryForm } from './SelectCategoryForm'
-import { SelectDateFieldForm } from './SelectDateFiedlForm'
+import { SelectDateFieldForm } from './SelectDateFieldForm'
 import { TextInputForm } from './TextInputForm'
 import { TwoColumnFieldForm } from './TwoColumnFieldForm'
 
@@ -40,5 +43,10 @@ export const Form = {
   },
   HygieneForm: {
     SelectHygieneCategory,
+    DedicatedTimeInput,
+  },
+  AlimentationForm: {
+    SelectMealType,
+    FoodsInput,
   },
 }
