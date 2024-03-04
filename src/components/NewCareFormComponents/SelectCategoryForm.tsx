@@ -1,7 +1,8 @@
 import { Picker } from '@react-native-picker/picker'
 import { useFormikContext } from 'formik'
 import { View } from 'react-native'
-import { NewCareFormData, formikInitialValues } from '../../screens/NewCareForm'
+import { formikInitialValues } from '../../shared/formik-initial-values'
+import { NewCareFormData } from '../../shared/interfaces/new-care-form-data-type'
 
 type SelectCategoryFormProps = {
   categories: string[]

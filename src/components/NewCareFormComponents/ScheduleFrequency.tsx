@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Text, TextInput, View } from 'react-native'
 
 import { useFormikContext } from 'formik'
-import { NewCareFormData } from '../../screens/NewCareForm'
+import { NewCareFormData } from '../../shared/interfaces/new-care-form-data-type'
 import { Checkbox } from '../Checkbox'
 import { ErrorMessage } from './ErrorMessageForm'
 

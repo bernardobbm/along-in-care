@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { Text, TouchableOpacity, View } from 'react-native'
 
 import { useFormikContext } from 'formik'
-import { NewCareFormData } from '../../screens/NewCareForm'
+import { NewCareFormData } from '../../shared/interfaces/new-care-form-data-type'
 import { ErrorMessage } from './ErrorMessageForm'
 
 type SelectDateFieldForm = {
@@ -62,7 +62,7 @@ export function SelectDateFieldForm({ name }: SelectDateFieldForm) {
       </TouchableOpacity>
 
       {errors[name] && touched[name] && (
-        <ErrorMessage>{errors[name] as string}</ErrorMessage>
+        <ErrorMessage>{errors[name]}</ErrorMessage>
       )}
     </View>
   )

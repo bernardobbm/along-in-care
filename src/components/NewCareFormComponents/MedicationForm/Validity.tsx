@@ -2,7 +2,7 @@ import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 import dayjs from 'dayjs'
 import { useFormikContext } from 'formik'
 import { Text, TouchableOpacity, View } from 'react-native'
-import { NewCareFormData } from '../../../screens/NewCareForm'
+import { NewCareFormData } from '../../../shared/interfaces/new-care-form-data-type'
 import { ErrorMessage } from '../ErrorMessageForm'
 
 export function Validity() {
@@ -22,7 +22,7 @@ export function Validity() {
         onPress={() => {
           DateTimePickerAndroid.open({
             minimumDate: tomorrow,
-            value: values.medication?.validity || tomorrow,
+            value: values.medication.validity || tomorrow,
             onChange: (_, date) => {
               if (date) setFieldValue('medication.validity', date)
             },
@@ -35,9 +35,9 @@ export function Validity() {
             : 'border-gray-400'
         }`}
       >
-        {values.medication?.validity ? (
+        {values.medication.validity ? (
           <Text className="font-label text-base text-gray-50">
-            {dayjs(values.medication?.validity).format('DD-MM-YYYY')}
+            {dayjs(values.medication.validity).format('DD-MM-YYYY')}
           </Text>
         ) : (
           <Text className="font-label text-base text-gray-400">DD-MM-AAAA</Text>
@@ -45,7 +45,7 @@ export function Validity() {
       </TouchableOpacity>
 
       {errors.medication?.validity && touched.medication?.validity && (
-        <ErrorMessage>{errors.medication?.validity as string}</ErrorMessage>
+        <ErrorMessage>{errors.medication.validity}</ErrorMessage>
       )}
     </View>
   )

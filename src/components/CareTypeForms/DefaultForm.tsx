@@ -1,7 +1,7 @@
 import { useFormikContext } from 'formik'
 import { ReactNode } from 'react'
 import { Form } from '../../components/NewCareFormComponents'
-import { NewCareFormData } from '../../screens/NewCareForm'
+import { NewCareFormData } from '../../shared/interfaces/new-care-form-data-type'
 import { ScheduleFrequency } from '../NewCareFormComponents/ScheduleFrequency'
 
 type DefaultForm = {

@@ -1,7 +1,7 @@
 import { Picker } from '@react-native-picker/picker'
 import { useFormikContext } from 'formik'
 import { View } from 'react-native'
-import { NewCareFormData } from '../../../screens/NewCareForm'
+import { NewCareFormData } from '../../../shared/interfaces/new-care-form-data-type'
 
 type SelectMeasureTypeProps = {
   measureType: string[]

@@ -1,7 +1,7 @@
 import { useFormikContext } from 'formik'
 import { useEffect, useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
-import { NewCareFormData } from '../screens/NewCareForm'
+import { NewCareFormData } from '../shared/interfaces/new-care-form-data-type'
 import { ErrorMessage } from './NewCareFormComponents/ErrorMessageForm'
 
 const availableWeekDays = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']

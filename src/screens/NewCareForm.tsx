@@ -2,7 +2,6 @@ import { AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { Formik } from 'formik'
 import { ScrollView, Text, View } from 'react-native'
-import yup from 'yup'
 
 import { AlimentationForm } from '../components/CareTypeForms/AlimentationForm'
 import { DefaultForm } from '../components/CareTypeForms/DefaultForm'
@@ -12,39 +11,16 @@ import { Header } from '../components/Header'
 import { HeaderButton } from '../components/HeaderButton'
 import { Form } from '../components/NewCareFormComponents'
 import { SelectCareDays } from '../components/SelectCareDays'
+import { formikInitialValues } from '../shared/formik-initial-values'
+import { NewCareFormData } from '../shared/interfaces/new-care-form-data-type'
 import { newCareFormSchema } from './validations/new-care-form-fields-validation'
 
 // const userTimeZoneDiff = new Date().getTimezoneOffset() / 60
 
-export type NewCareFormData = yup.InferType<typeof newCareFormSchema>
-
 export function NewCareForm() {
   const navigation = useNavigation()
 
-  const formikInitialValues = {
-    careDays: [],
-    category: '',
-    title: '',
-    description: '',
-    scheduleType: 'variável',
-    schedule: '',
-    startsAt: '',
-    endsAt: null,
-    isContinuous: '',
-    medication: {
-      validity: '',
-      composition: '',
-      administrationRoute: '',
-      dosage: '',
-      measureType: '',
-    },
-    hygiene: {
-      hygieneCategory: '',
-    },
-    alimentation: {},
-  }
-
-  function handleNewCareFormSubmit(formData: typeof formikInitialValues) {
+  function handleNewCareFormSubmit(formData: NewCareFormData) {
     console.log(formData)
   }
 

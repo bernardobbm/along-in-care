@@ -1,6 +1,6 @@
 import { useFormikContext } from 'formik'
 import { TextInput, View } from 'react-native'
-import { NewCareFormData } from '../../../screens/NewCareForm'
+import { NewCareFormData } from '../../../shared/interfaces/new-care-form-data-type'
 import { ErrorMessage } from '../ErrorMessageForm'
 
 export function Composition() {
@@ -19,11 +19,11 @@ export function Composition() {
         placeholderTextColor="#56565a"
         cursorColor="#eaeaea"
         onChangeText={handleChange('medication.composition')}
-        value={values.medication?.composition}
+        value={values.medication.composition}
       />
 
       {errors.medication?.composition && touched.medication?.composition && (
-        <ErrorMessage>{errors.medication?.composition}</ErrorMessage>
+        <ErrorMessage>{errors.medication.composition}</ErrorMessage>
       )}
     </View>
   )

@@ -1,7 +1,7 @@
 import { useFormikContext } from 'formik'
 import { useState } from 'react'
 import { TextInput, TextInputProps, View } from 'react-native'
-import { NewCareFormData } from '../../screens/NewCareForm'
+import { NewCareFormData } from '../../shared/interfaces/new-care-form-data-type'
 import { ErrorMessage } from './ErrorMessageForm'
 
 type TextInputFormProps = TextInputProps & {
