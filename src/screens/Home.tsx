@@ -3,9 +3,11 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { CareDays } from '../components/CareDays'
 import { CareList } from '../components/CareList'
 import { Header } from '../components/Header'
+import { LinkUpAPatient } from '../components/LinkUpAPatient'
 
 export function Home() {
   const username = 'primeiro nome'
+  const havePatient = false
 
   return (
     <SafeAreaView className="flex-1 bg-gray-900 px-8">
@@ -23,11 +25,15 @@ export function Home() {
 
       <CareDays />
 
-      <ScrollView className="mb-6" showsVerticalScrollIndicator={false}>
-        <CareList category="Medicamentos" />
-        <CareList category="Alimentação" />
-        <CareList category="Higiene" />
-      </ScrollView>
+      {havePatient ? (
+        <ScrollView className="mb-6" showsVerticalScrollIndicator={false}>
+          <CareList category="Medicamentos" />
+          <CareList category="Alimentação" />
+          <CareList category="Higiene" />
+        </ScrollView>
+      ) : (
+        <LinkUpAPatient />
+      )}
     </SafeAreaView>
   )
 }
