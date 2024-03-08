@@ -16,6 +16,8 @@ import {
 import { useNavigation } from '@react-navigation/native'
 import { useCallback } from 'react'
 
+import Logo from '../assets/logo.svg'
+
 SplashScreen.preventAutoHideAsync()
 
 export function Login() {
@@ -46,16 +48,8 @@ export function Login() {
     >
       <StatusBar barStyle="light-content" backgroundColor="#1c6aa3" />
 
-      <View className="h-[420px] w-[100vw] items-center justify-center gap-y-10 rounded-b-[50px] bg-[#1c6aa3] px-8">
-        {/* substituir por ícone */}
-        <View
-          className="rounded-lg"
-          style={{
-            backgroundColor: '#fff',
-            height: 100,
-            width: 100,
-          }}
-        />
+      <View className="h-[420px] w-[100vw] items-center justify-center gap-y-5 rounded-b-[50px] bg-primary px-8">
+        <Logo />
 
         <Text className="text-center font-body text-lg text-gray-50">
           O Along In Care é o aplicativo certo voltado para o cuidado daqueles
