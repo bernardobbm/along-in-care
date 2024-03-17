@@ -4,20 +4,6 @@ import { DefaultForm } from './DefaultForm'
 export function MedicationForm() {
   return (
     <DefaultForm>
-      <Form.TwoColumnField>
-        <Form.Field>
-          <Form.Label>Validade da medicação:</Form.Label>
-
-          <Form.MedicationForm.Validity />
-        </Form.Field>
-
-        <Form.Field>
-          <Form.Label>Composição:</Form.Label>
-
-          <Form.MedicationForm.Composition />
-        </Form.Field>
-      </Form.TwoColumnField>
-
       <Form.Field>
         <Form.Label>Via de Administração:</Form.Label>
         <Form.MedicationForm.SelectRouteOfAdministration
@@ -31,15 +17,15 @@ export function MedicationForm() {
 
       <Form.TwoColumnField>
         <Form.Field>
-          <Form.Label>Dosagem:</Form.Label>
+          <Form.Label>Quantidade:</Form.Label>
 
-          <Form.MedicationForm.Dosage />
+          <Form.MedicationForm.Quantity />
         </Form.Field>
 
         <Form.Field>
-          <Form.Label>Medida:</Form.Label>
-          <Form.MedicationForm.SelectMeasureType
-            measureType={['ml', 'comprimido(s)', 'camada(s)']}
+          <Form.Label>Unidade de medida:</Form.Label>
+          <Form.MedicationForm.SelectUnit
+            units={['ml', 'comprimido(s)', 'camada(s)']}
           />
         </Form.Field>
       </Form.TwoColumnField>
