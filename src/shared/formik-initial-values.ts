@@ -14,8 +14,8 @@ export const formikInitialValues: NewCareFormData = {
     validity: null, // iniciando como nulo apenas para funcionamento da tipagem
     composition: '',
     administrationRoute: '',
-    dosage: '',
-    measureType: '',
+    quantity: '',
+    unit: '',
   },
   hygiene: {
     hygieneCategory: '',

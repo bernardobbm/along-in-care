@@ -37,7 +37,7 @@ export function ScheduleFrequency() {
         />
 
         <Checkbox
-          title="De hora em hora"
+          title="A cada determina hora"
           onPress={() => {
             handleToggleScheduleFrequencyType()
 

@@ -9,9 +9,9 @@ import { SelectHygieneCategory } from './HygieneForm/SelectHygieneCategory'
 import { IsContinuousFieldForm } from './IsContinuousFieldForm'
 import { LabelForm } from './LabelForm'
 import { Composition } from './MedicationForm/Composition'
-import { Dosage } from './MedicationForm/Dosage'
-import { SelectMeasureType } from './MedicationForm/SelectMeasureType'
+import { Quantity } from './MedicationForm/Quantity'
 import { SelectRouteOfAdministration } from './MedicationForm/SelectRouteOfAdministration'
+import { SelectUnit } from './MedicationForm/SelectUnit'
 import { Validity } from './MedicationForm/Validity'
 import { RootForm } from './RootForm'
 import { ScheduleFrequency } from './ScheduleFrequency'
@@ -38,8 +38,8 @@ export const Form = {
     Validity,
     Composition,
     SelectRouteOfAdministration,
-    Dosage,
-    SelectMeasureType,
+    Quantity,
+    SelectUnit,
   },
   HygieneForm: {
     SelectHygieneCategory,

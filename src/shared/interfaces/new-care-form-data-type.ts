@@ -12,8 +12,8 @@ export type NewCareFormData = {
     validity: Date | null
     composition: string
     administrationRoute: string
-    dosage: string
-    measureType: string
+    quantity: string
+    unit: string
   }
   hygiene: {
     hygieneCategory: string

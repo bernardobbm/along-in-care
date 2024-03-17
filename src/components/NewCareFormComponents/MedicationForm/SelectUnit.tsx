@@ -3,11 +3,11 @@ import { useFormikContext } from 'formik'
 import { View } from 'react-native'
 import { NewCareFormData } from '../../../shared/interfaces/new-care-form-data-type'
 
-type SelectMeasureTypeProps = {
-  measureType: string[]
+type SelectUnitProps = {
+  units: string[]
 }
 
-export function SelectMeasureType({ measureType }: SelectMeasureTypeProps) {
+export function SelectUnit({ units }: SelectUnitProps) {
   const { values, handleChange } = useFormikContext<NewCareFormData>()
 
   return (
@@ -15,24 +15,24 @@ export function SelectMeasureType({ measureType }: SelectMeasureTypeProps) {
       <Picker
         dropdownIconColor="#56565a"
         mode="dropdown"
-        selectedValue={values.medication.measureType}
-        onValueChange={handleChange('medication.measureType')}
+        selectedValue={values.medication.unit}
+        onValueChange={handleChange('medication.unit')}
         style={{
           backgroundColor: '#28282d',
           color: '#eaeaea',
         }}
       >
-        {measureType.map((measure) => {
+        {units.map((unit) => {
           return (
             <Picker.Item
-              key={measure}
+              key={unit}
               style={{
                 backgroundColor: '#28282d',
                 fontSize: 18,
                 color: '#eaeaea',
               }}
-              label={measure}
-              value={measure.toLocaleLowerCase()}
+              label={unit}
+              value={unit.toLocaleLowerCase()}
             />
           )
         })}

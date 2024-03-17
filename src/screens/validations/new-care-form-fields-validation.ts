@@ -90,7 +90,7 @@ export const newCareFormSchema = yup.object().shape({
             )
             .required('Campo "Composição" é obrigatório'),
 
-          dosage: yup
+          quantity: yup
             .number()
             .positive(
               'A dosagem precisa ter no mínimo 1 (uma) unidade, independente da medida',
@@ -98,9 +98,7 @@ export const newCareFormSchema = yup.object().shape({
             .typeError('Digite uma dosagem válida (apenas números)')
             .required('Campo "Dosagem" é obrigatório'),
 
-          measureType: yup
-            .mixed<string>()
-            .oneOf(['ml', 'comprimido', 'camada']),
+          unit: yup.mixed<string>().oneOf(['ml', 'comprimido', 'camada']),
         })
         .optional(),
   }),
