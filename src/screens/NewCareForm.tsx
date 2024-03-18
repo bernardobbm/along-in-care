@@ -60,13 +60,18 @@ export function NewCareForm() {
               <Form.Field>
                 <Form.Label>Categoria:</Form.Label>
                 <Form.SelectCategory
-                  categories={['Medicação', 'Higiene', 'Alimentação', 'Outro']}
+                  categories={[
+                    'Medicação',
+                    'Higiene',
+                    'Recomendações Alimentares',
+                    'Outro',
+                  ]}
                 />
               </Form.Field>
 
               {values.category === 'medicação' ? (
                 <MedicationForm />
-              ) : values.category === 'alimentação' ? (
+              ) : values.category === 'recomendações alimentares' ? (
                 <AlimentationForm />
               ) : values.category === 'higiene' ? (
                 <HygieneForm />

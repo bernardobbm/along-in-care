@@ -18,7 +18,7 @@ export const newCareFormSchema = yup.object().shape({
 
   category: yup
     .mixed<string>()
-    .oneOf(['medicação', 'alimentação', 'higiene', 'outro']),
+    .oneOf(['medicação', 'recomendações alimentares', 'higiene', 'outro']),
 
   title: yup
     .string()
@@ -109,7 +109,12 @@ export const newCareFormSchema = yup.object().shape({
       yup.object().shape({
         hygieneCategory: yup
           .mixed<string>()
-          .oneOf(['banho', 'escovação (dentes)', 'lavar o cabelo']),
+          .oneOf([
+            'banho',
+            'escovação (dentes)',
+            'lavar o cabelo',
+            'troca de frauda',
+          ]),
         dedicatedTime: yup
           .number()
           .min(
