@@ -5,7 +5,7 @@ import { NewCareFormData } from '../../shared/interfaces/new-care-form-data-type
 import { Checkbox } from '../Checkbox'
 
 export function IsContinuousFieldForm() {
-  const { values, setFieldValue } = useFormikContext<NewCareFormData>()
+  const { setFieldValue, values } = useFormikContext<NewCareFormData>()
 
   return (
     <View className="flex-row">

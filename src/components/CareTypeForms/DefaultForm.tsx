@@ -35,6 +35,11 @@ export function DefaultForm({ children }: DefaultForm) {
         <ScheduleFrequency />
       </Form.Field>
 
+      <Form.Field>
+        <Form.Label>Este cuidado é contínuo?</Form.Label>
+        <Form.IsContinuous />
+      </Form.Field>
+
       <Form.TwoColumnField>
         <Form.Field>
           <Form.Label>Data de Inicio:</Form.Label>
@@ -48,10 +53,6 @@ export function DefaultForm({ children }: DefaultForm) {
           </Form.Field>
         )}
       </Form.TwoColumnField>
-
-      <Form.Field>
-        <Form.IsContinuous />
-      </Form.Field>
 
       {children}
     </>
