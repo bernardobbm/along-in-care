@@ -4,16 +4,17 @@ export function CareListItem() {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      className="h-28 w-fit flex-row overflow-hidden rounded-lg bg-gray-700"
+      className="h-24 w-fit flex-row overflow-hidden rounded-lg bg-gray-700"
     >
-      <View className="aspect-square h-fit bg-gray-600">
+      <View className="aspect-square h-fit items-center justify-center bg-gray-600 px-3">
         {/* //todo: colocar algum ícone aqui */}
+        <Text className="text-white">TO DO: Icon here</Text>
       </View>
 
-      <View className="flex-1 px-5 py-2.5">
+      <View className="flex-1 justify-center px-4">
         {/* title */}
         <Text
-          className="font-title text-lg text-gray-50"
+          className="font-title text-base text-gray-50"
           ellipsizeMode="tail"
           numberOfLines={1}
         >
