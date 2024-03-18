@@ -131,6 +131,10 @@ export const newCareFormSchema = yup.object().shape({
           .string()
           .min(1, 'Campo "Alimentos da refeição" é obrigatório')
           .required('Campo "Alimentos da refeição" é obrigatório'),
+        notRecomendedFood: yup
+          .string()
+          .min(1, 'Campo "Alimentos não recomendados" é obrigatório')
+          .required('Campo "Alimentos não recomendados" é obrigatório'),
       }),
   }),
 })

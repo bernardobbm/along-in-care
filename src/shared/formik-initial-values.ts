@@ -24,5 +24,6 @@ export const formikInitialValues: NewCareFormData = {
   alimentation: {
     meal: '',
     food: '',
+    notRecommendedFood: '',
   },
 }

@@ -22,5 +22,6 @@ export type NewCareFormData = {
   alimentation: {
     meal: string
     food: string
+    notRecommendedFood: string
   }
 }

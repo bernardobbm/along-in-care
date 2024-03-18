@@ -1,5 +1,6 @@
 import { AffirmativeButtonForm } from './AffirmativeButtonForm'
 import { FoodsInput } from './AlimentationForm/FoodsInput'
+import { NotRecommendedFoodInput } from './AlimentationForm/NotRecomendedFoodInput'
 import { SelectMealType } from './AlimentationForm/SelectMealType'
 import { ButtonFieldForm } from './ButtonFieldForm'
 import { CancelButtonForm } from './CancelButtonForm'
@@ -48,5 +49,6 @@ export const Form = {
   AlimentationForm: {
     SelectMealType,
     FoodsInput,
+    NotRecommendedFoodInput,
   },
 }

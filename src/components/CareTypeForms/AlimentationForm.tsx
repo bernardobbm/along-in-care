@@ -17,6 +17,11 @@ export function AlimentationForm() {
           <Form.Label>Alimentos:</Form.Label>
           <Form.AlimentationForm.FoodsInput placeholder="Digite os alimentos da refeição" />
         </Form.Field>
+
+        <Form.Field>
+          <Form.Label>Alimentos não recomendados:</Form.Label>
+          <Form.AlimentationForm.NotRecommendedFoodInput placeholder="Digite alimentos que não devem ser dados" />
+        </Form.Field>
       </DefaultForm>
     </View>
   )
