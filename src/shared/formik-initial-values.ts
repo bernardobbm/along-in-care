@@ -11,15 +11,13 @@ export const formikInitialValues: NewCareFormData = {
   endsAt: null,
   isContinuous: false,
   medication: {
-    validity: null, // iniciando como nulo apenas para funcionamento da tipagem
-    composition: '',
     administrationRoute: '',
     quantity: '',
     unit: '',
   },
   hygiene: {
     hygieneCategory: '',
-    dedicatedTime: '',
+    instructions: '',
   },
   alimentation: {
     meal: '',

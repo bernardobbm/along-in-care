@@ -74,21 +74,21 @@ export const newCareFormSchema = yup.object().shape({
       yup
         .object()
         .shape({
-          validity: yup.date().required('Selecione uma data de validade'),
+          // validity: yup.date().required('Selecione uma data de validade'),
 
           administrationRoute: yup
             .mixed<string>()
             .oneOf(['oral', 'tópico (pomadas)', 'parenteral (injeções)']),
 
-          composition: yup
-            .string()
-            .trim()
-            .min(1, 'Campo "Composição" é obrigatório')
-            .matches(
-              /(\d+) ?(mg|ml|mcg|mg\/g|mg\/ml|g\/ml|mcg\/ml)$/i,
-              'Digite uma composição válida, contendo o valor e o tipo de medida',
-            )
-            .required('Campo "Composição" é obrigatório'),
+          // composition: yup
+          //   .string()
+          //   .trim()
+          //   .min(1, 'Campo "Composição" é obrigatório')
+          //   .matches(
+          //     /(\d+) ?(mg|ml|mcg|mg\/g|mg\/ml|g\/ml|mcg\/ml)$/i,
+          //     'Digite uma composição válida, contendo o valor e o tipo de medida',
+          //   )
+          //   .required('Campo "Composição" é obrigatório'),
 
           quantity: yup
             .number()
@@ -115,13 +115,19 @@ export const newCareFormSchema = yup.object().shape({
             'lavar o cabelo',
             'troca de frauda',
           ]),
-        dedicatedTime: yup
-          .number()
-          .min(
-            1,
-            'É necessário que o cuidado tenha pelo menos um minuto de duração',
-          )
-          .required('Campo "Tempo a ser dedicado" é obrigatório'),
+
+        instructions: yup
+          .string()
+          .trim()
+          .min(1, 'Campo de instruções é obrigatório')
+          .required('Campo de instruções é obrigatório'),
+        // dedicatedTime: yup
+        //   .number()
+        //   .min(
+        //     1,
+        //     'É necessário que o cuidado tenha pelo menos um minuto de duração',
+        //   )
+        //   .required('Campo "Tempo a ser dedicado" é obrigatório'),
       }),
   }),
 
@@ -136,7 +142,8 @@ export const newCareFormSchema = yup.object().shape({
           .string()
           .min(1, 'Campo "Alimentos da refeição" é obrigatório')
           .required('Campo "Alimentos da refeição" é obrigatório'),
-        notRecomendedFood: yup
+
+        notRecommendedFood: yup
           .string()
           .min(1, 'Campo "Alimentos não recomendados" é obrigatório')
           .required('Campo "Alimentos não recomendados" é obrigatório'),

@@ -9,15 +9,16 @@ export type NewCareFormData = {
   endsAt: Date | null
   isContinuous: boolean
   medication: {
-    validity: Date | null
-    composition: string
+    // validity: Date | null
+    // composition: string
     administrationRoute: string
     quantity: string
     unit: string
   }
   hygiene: {
+    // dedicatedTime: string
     hygieneCategory: string
-    dedicatedTime: string
+    instructions: string
   }
   alimentation: {
     meal: string
