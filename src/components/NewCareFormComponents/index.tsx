@@ -5,7 +5,7 @@ import { SelectMealType } from './AlimentationForm/SelectMealType'
 import { ButtonFieldForm } from './ButtonFieldForm'
 import { CancelButtonForm } from './CancelButtonForm'
 import { FieldForm } from './FieldForm'
-import { DedicatedTimeInput } from './HygieneForm/DedicatedTimeInput'
+import { HygieneInstructions } from './HygieneForm/HygieneInstructions'
 import { SelectHygieneCategory } from './HygieneForm/SelectHygieneCategory'
 import { IsContinuousFieldForm } from './IsContinuousFieldForm'
 import { LabelForm } from './LabelForm'
@@ -44,7 +44,7 @@ export const Form = {
   },
   HygieneForm: {
     SelectHygieneCategory,
-    DedicatedTimeInput,
+    Instructions: HygieneInstructions,
   },
   AlimentationForm: {
     SelectMealType,
