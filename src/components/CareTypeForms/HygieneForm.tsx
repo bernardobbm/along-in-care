@@ -16,6 +16,11 @@ export function HygieneForm() {
           ]}
         />
       </Form.Field>
+
+      <Form.Field>
+        <Form.Label>Instruções para realizar a higiene:</Form.Label>
+        <Form.HygieneForm.Instructions placeholder="Digite as instruções para realizar a higiene" />
+      </Form.Field>
     </DefaultForm>
   )
 }
