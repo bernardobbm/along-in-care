@@ -16,7 +16,7 @@ export function Quantity() {
             : 'border-gray-400'
         }`}
         value={String(values.medication?.quantity)}
-        onChangeText={handleChange('medication.?.quantity')}
+        onChangeText={handleChange('medication.quantity')}
         keyboardType="numeric"
         cursorColor="#eaeaea"
         maxLength={2}
