@@ -20,7 +20,7 @@ import Logo from '../assets/logo.svg'
 
 SplashScreen.preventAutoHideAsync()
 
-export function Login() {
+export function SignIn() {
   const { navigate } = useNavigation()
 
   const [hasLoadedFonts] = useFonts({
@@ -61,17 +61,27 @@ export function Login() {
         Entre ou cadastre-se utilizando uma conta Google já existente
       </Text>
 
-      <TouchableOpacity
-        className="w-fit flex-row items-center gap-x-5 rounded-xl bg-gray-700 px-5 py-3"
-        activeOpacity={0.7}
-        onPress={() => navigate('AppHome')}
-      >
-        {/* substituir depois */}
-        <AntDesign name="google" size={40} color={'#eaeaea'} />
-        <Text className="font-body text-lg text-gray-50">
-          Entre com sua conta Google
-        </Text>
-      </TouchableOpacity>
+      <View className="space-y-6">
+        <TouchableOpacity
+          className="w-56 flex-row items-center justify-center rounded-xl bg-gray-700 px-5 py-3"
+          activeOpacity={0.7}
+          onPress={() => navigate('Register')}
+        >
+          <AntDesign name="adduser" size={26} color={'#eaeaea'} />
+          <Text className="ml-4 font-body text-lg text-gray-50">
+            Cadastre-se
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          className="w-56 flex-row items-center justify-center rounded-xl bg-gray-700 px-5 py-3"
+          activeOpacity={0.7}
+          onPress={() => navigate('Login')}
+        >
+          <AntDesign name="login" size={25} color={'#eaeaea'} />
+          <Text className="ml-4 font-body text-lg text-gray-50">Entre</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
