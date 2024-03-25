@@ -11,8 +11,8 @@ import { Header } from '../components/Header'
 import { HeaderButton } from '../components/HeaderButton'
 import { Form } from '../components/NewCareFormComponents'
 import { SelectCareDays } from '../components/SelectCareDays'
-import { formikInitialValues } from '../shared/formik-initial-values'
 import { NewCareFormData } from '../shared/interfaces/new-care-form-data-type'
+import { formikInitialValues } from '../shared/new-care-form-initial-values'
 import { newCareFormSchema } from './validations/new-care-form-fields-validation'
 
 // const userTimeZoneDiff = new Date().getTimezoneOffset() / 60
@@ -83,19 +83,27 @@ export function NewCareForm() {
 
           <Form.ButtonField>
             <Form.CancelButton
-              text="Cancelar"
+              color="cancel"
               onPress={() => {
                 navigation.reset({
                   index: 0,
                   routes: [{ name: 'Home' }],
                 })
               }}
-            />
+            >
+              <Text className="font-body_semibold text-base text-gray-50">
+                Cancelar
+              </Text>
+            </Form.CancelButton>
 
             <Form.AffirmativeButton
-              text="Adicionar"
+              color="confirm"
               onPress={() => handleSubmit()}
-            />
+            >
+              <Text className="font-body_semibold text-base text-gray-50">
+                Adicionar
+              </Text>
+            </Form.AffirmativeButton>
           </Form.ButtonField>
         </View>
       )}

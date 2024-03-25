@@ -1,9 +1,8 @@
-import { AffirmativeButtonForm } from './AffirmativeButtonForm'
+import { Button } from '../Button'
 import { FoodsInput } from './AlimentationForm/FoodsInput'
 import { NotRecommendedFoodInput } from './AlimentationForm/NotRecomendedFoodInput'
 import { SelectMealType } from './AlimentationForm/SelectMealType'
 import { ButtonFieldForm } from './ButtonFieldForm'
-import { CancelButtonForm } from './CancelButtonForm'
 import { FieldForm } from './FieldForm'
 import { HygieneInstructions } from './HygieneForm/HygieneInstructions'
 import { SelectHygieneCategory } from './HygieneForm/SelectHygieneCategory'
@@ -33,8 +32,8 @@ export const Form = {
   EndsAt: SelectDateFieldForm,
   IsContinuous: IsContinuousFieldForm,
   ButtonField: ButtonFieldForm,
-  AffirmativeButton: AffirmativeButtonForm,
-  CancelButton: CancelButtonForm,
+  AffirmativeButton: Button,
+  CancelButton: Button,
   MedicationForm: {
     Validity,
     Composition,
