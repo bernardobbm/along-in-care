@@ -1,6 +1,6 @@
 import { AntDesign } from '@expo/vector-icons'
 import { SplashScreen } from 'expo-router'
-import { StatusBar, Text, TouchableOpacity, View } from 'react-native'
+import { Text, View } from 'react-native'
 
 import {
   Inter_400Regular,
@@ -17,6 +17,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useCallback } from 'react'
 
 import Logo from '../assets/logo.svg'
+import { Button } from '../components/Button'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -46,9 +47,7 @@ export function SignIn() {
       className="flex-1 items-center gap-12 bg-gray-900"
       onLayout={onLayoutRootView}
     >
-      <StatusBar barStyle="light-content" backgroundColor="#1c6aa3" />
-
-      <View className="h-[420px] w-[100vw] items-center justify-center gap-y-5 rounded-b-[50px] bg-primary px-8">
+      <View className="h-[420px] w-screen items-center justify-center gap-y-5 rounded-b-[50px] bg-primary px-8">
         <Logo />
 
         <Text className="text-center font-body text-lg text-gray-50">
@@ -61,26 +60,18 @@ export function SignIn() {
         Entre ou cadastre-se utilizando uma conta Google já existente
       </Text>
 
-      <View className="space-y-6">
-        <TouchableOpacity
-          className="w-56 flex-row items-center justify-center rounded-xl bg-gray-700 px-5 py-3"
-          activeOpacity={0.7}
-          onPress={() => navigate('Register')}
-        >
+      <View>
+        <Button size="lg" onPress={() => navigate('Register')}>
           <AntDesign name="adduser" size={26} color={'#eaeaea'} />
           <Text className="ml-4 font-body text-lg text-gray-50">
             Cadastre-se
           </Text>
-        </TouchableOpacity>
+        </Button>
 
-        <TouchableOpacity
-          className="w-56 flex-row items-center justify-center rounded-xl bg-gray-700 px-5 py-3"
-          activeOpacity={0.7}
-          onPress={() => navigate('Login')}
-        >
+        <Button size="lg" extraClasses="mt-6" onPress={() => navigate('Login')}>
           <AntDesign name="login" size={25} color={'#eaeaea'} />
           <Text className="ml-4 font-body text-lg text-gray-50">Entre</Text>
-        </TouchableOpacity>
+        </Button>
       </View>
     </View>
   )
