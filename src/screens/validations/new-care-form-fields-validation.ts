@@ -71,36 +71,21 @@ export const newCareFormSchema = yup.object().shape({
   medication: yup.object().when('category', {
     is: 'medicação',
     then: () =>
-      yup
-        .object()
-        .shape({
-          // validity: yup.date().required('Selecione uma data de validade'),
+      yup.object().shape({
+        administrationRoute: yup
+          .mixed<string>()
+          .oneOf(['oral', 'tópico (pomadas)', 'parenteral (injeções)']),
 
-          administrationRoute: yup
-            .mixed<string>()
-            .oneOf(['oral', 'tópico (pomadas)', 'parenteral (injeções)']),
+        quantity: yup
+          .number()
+          .positive(
+            'A dosagem precisa ter no mínimo 1 (uma) unidade, independente da medida',
+          )
+          .typeError('Digite uma dosagem válida (apenas números)')
+          .required('Campo "Dosagem" é obrigatório'),
 
-          // composition: yup
-          //   .string()
-          //   .trim()
-          //   .min(1, 'Campo "Composição" é obrigatório')
-          //   .matches(
-          //     /(\d+) ?(mg|ml|mcg|mg\/g|mg\/ml|g\/ml|mcg\/ml)$/i,
-          //     'Digite uma composição válida, contendo o valor e o tipo de medida',
-          //   )
-          //   .required('Campo "Composição" é obrigatório'),
-
-          quantity: yup
-            .number()
-            .positive(
-              'A dosagem precisa ter no mínimo 1 (uma) unidade, independente da medida',
-            )
-            .typeError('Digite uma dosagem válida (apenas números)')
-            .required('Campo "Dosagem" é obrigatório'),
-
-          unit: yup.mixed<string>().oneOf(['ml', 'comprimido', 'camada']),
-        })
-        .optional(),
+        unit: yup.mixed<string>().oneOf(['ml', 'comprimido', 'camada']),
+      }),
   }),
 
   hygiene: yup.object().when('category', {
@@ -121,13 +106,6 @@ export const newCareFormSchema = yup.object().shape({
           .trim()
           .min(1, 'Campo de instruções é obrigatório')
           .required('Campo de instruções é obrigatório'),
-        // dedicatedTime: yup
-        //   .number()
-        //   .min(
-        //     1,
-        //     'É necessário que o cuidado tenha pelo menos um minuto de duração',
-        //   )
-        //   .required('Campo "Tempo a ser dedicado" é obrigatório'),
       }),
   }),
 
