@@ -1,8 +1,8 @@
 import { Picker } from '@react-native-picker/picker'
 import { useFormikContext } from 'formik'
 import { View } from 'react-native'
-import { formikInitialValues } from '../../shared/formik-initial-values'
 import { NewCareFormData } from '../../shared/interfaces/new-care-form-data-type'
+import { newCareFormInitialValues } from '../../shared/new-care-form-initial-values'
 
 type SelectCategoryFormProps = {
   categories: string[]
@@ -22,7 +22,7 @@ export function SelectCategoryForm({ categories }: SelectCategoryFormProps) {
           setFieldValue('category', selectedCategory)
 
           resetForm({
-            values: { ...formikInitialValues, category: selectedCategory },
+            values: { ...newCareFormInitialValues, category: selectedCategory },
           })
         }}
         style={{

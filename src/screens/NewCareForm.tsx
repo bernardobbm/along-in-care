@@ -12,7 +12,7 @@ import { HeaderButton } from '../components/HeaderButton'
 import { Form } from '../components/NewCareFormComponents'
 import { SelectCareDays } from '../components/SelectCareDays'
 import { NewCareFormData } from '../shared/interfaces/new-care-form-data-type'
-import { formikInitialValues } from '../shared/new-care-form-initial-values'
+import { newCareFormInitialValues } from '../shared/new-care-form-initial-values'
 import { newCareFormSchema } from './validations/new-care-form-fields-validation'
 
 // const userTimeZoneDiff = new Date().getTimezoneOffset() / 60
@@ -26,7 +26,7 @@ export function NewCareForm() {
 
   return (
     <Formik
-      initialValues={formikInitialValues}
+      initialValues={newCareFormInitialValues}
       onSubmit={handleNewCareFormSubmit}
       validationSchema={newCareFormSchema}
     >

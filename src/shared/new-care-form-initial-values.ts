@@ -1,6 +1,6 @@
 import { NewCareFormData } from './interfaces/new-care-form-data-type'
 
-export const formikInitialValues: NewCareFormData = {
+export const newCareFormInitialValues: NewCareFormData = {
   careDays: [],
   category: '',
   title: '',
