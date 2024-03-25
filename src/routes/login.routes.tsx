@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Login } from '../components/RegisterForm/Login'
-import { Register } from '../components/RegisterForm/Register'
+import { StatusBar } from 'react-native'
+import { Login } from '../screens/Login'
+import { Register } from '../screens/Register'
 import { SignIn } from '../screens/SignIn'
 import { AppRoutes } from './app.routes'
 
@@ -8,16 +9,20 @@ const { Navigator, Screen } = createNativeStackNavigator()
 
 export function LoginRoutes() {
   return (
-    <Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-      initialRouteName="SignIn"
-    >
-      <Screen name="SignIn" component={SignIn} />
-      <Screen name="Login" component={Login} />
-      <Screen name="Register" component={Register} />
-      <Screen name="AppHome" component={AppRoutes} />
-    </Navigator>
+    <>
+      <StatusBar barStyle="light-content" backgroundColor="#1c6aa3" />
+
+      <Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+        initialRouteName="SignIn"
+      >
+        <Screen name="SignIn" component={SignIn} />
+        <Screen name="Login" component={Login} />
+        <Screen name="Register" component={Register} />
+        <Screen name="AppHome" component={AppRoutes} />
+      </Navigator>
+    </>
   )
 }
