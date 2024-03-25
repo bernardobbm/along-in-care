@@ -6,5 +6,5 @@ type ButtonFieldFormProps = {
 }
 
 export function ButtonFieldForm({ children }: ButtonFieldFormProps) {
-  return <View className="mb-10 flex-row justify-between">{children}</View>
+  return <View className="mb-10 mt-6 flex-row justify-between">{children}</View>
 }
