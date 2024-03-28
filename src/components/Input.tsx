@@ -3,7 +3,7 @@ import { VariantProps, tv } from 'tailwind-variants'
 import { ErrorMessage } from './NewCareFormComponents/ErrorMessageForm'
 
 const input = tv({
-  base: 'w-full rounded-md border-2 border-gray-400 bg-gray-600 px-4 py-3 font-label text-base text-gray-50',
+  base: 'w-full h-12 rounded-md border-2 border-gray-400 bg-gray-600 px-4 py-3 font-label text-base text-gray-50',
   variants: {
     error: {
       true: 'border-[#e83f5b]',
