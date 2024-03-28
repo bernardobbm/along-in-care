@@ -12,6 +12,6 @@ export const registerFormSchema = yup.object().shape({
   confirmPassword: yup
     .string()
     .trim()
-    .oneOf([yup.ref('confirmPassword')], 'As senhas devem ser iguais')
+    .oneOf([yup.ref('password')], 'As senhas devem ser iguais')
     .required('O campo "Confirmar senha" é obrigatório'),
 })
