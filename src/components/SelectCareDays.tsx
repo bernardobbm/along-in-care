@@ -28,7 +28,7 @@ export function SelectCareDays() {
   return (
     <View className="mb-2">
       <View
-        className={`mt-4 flex-row items-center justify-around border-b-2 border-t-2 py-1 ${
+        className={`mt-2 flex-row items-center justify-around border-b-2 border-t-2 py-1 ${
           errors.careDays && touched.careDays
             ? 'border-[#e83f5b]'
             : ' border-gray-300'
