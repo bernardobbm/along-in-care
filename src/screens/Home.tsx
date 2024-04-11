@@ -1,4 +1,4 @@
-import { Image, ScrollView, StatusBar } from 'react-native'
+import { ScrollView, StatusBar } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { CareDays } from '../components/CareDays'
 import { CareList } from '../components/CareList'
@@ -13,15 +13,7 @@ export function Home() {
     <SafeAreaView className="flex-1 bg-gray-900 px-8">
       <StatusBar barStyle="light-content" backgroundColor="#121215" />
 
-      <Header text={`Olá, ${username}`}>
-        <Image
-          className="h-10 w-10 rounded-full"
-          alt="Profile picture of the user"
-          source={{
-            uri: 'https://i.pinimg.com/originals/56/e7/61/56e76147bc69cfabeaa726c5b944521f.jpg',
-          }}
-        />
-      </Header>
+      <Header text={`Olá, ${username}`} />
 
       <CareDays />
 
