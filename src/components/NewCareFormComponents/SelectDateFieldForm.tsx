@@ -15,19 +15,11 @@ export function SelectDateFieldForm({ name }: SelectDateFieldForm) {
     useFormikContext<NewCareFormData>()
 
   function handleDateSelect(dateType: 'startsAt' | 'endsAt', date: Date) {
-    const actualDate = dayjs(new Date(Date.now())).startOf('hour')
-
-    const isDateEqualNow = dayjs(date).startOf('hour').isSame(actualDate)
-
-    if (dateType === 'startsAt' && isDateEqualNow) {
-      return dayjs(date).startOf('hour').toDate() // today with actual hour
-    }
-
     if (dateType === 'endsAt') {
-      return dayjs(date).endOf('day').startOf('hour').toDate() // end of day of the day selected
+      return dayjs.utc(date).endOf('day').toDate() // end of day of the day selected
     }
 
-    return dayjs(date).startOf('day').toDate() // start of day of the day selected
+    return dayjs.utc(date).startOf('day').toDate() // start of day of the day selected
   }
 
   return (
@@ -54,7 +46,7 @@ export function SelectDateFieldForm({ name }: SelectDateFieldForm) {
       >
         {values[name] ? (
           <Text className="font-label text-base text-gray-50">
-            {dayjs(values[name]).format('DD-MM-YYYY')}
+            {dayjs.utc(values[name]).format('DD-MM-YYYY')}
           </Text>
         ) : (
           <Text className="font-label text-base text-gray-400">DD-MM-AAAA</Text>
