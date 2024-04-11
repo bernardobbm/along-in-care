@@ -21,31 +21,31 @@ export function ScheduleFrequency() {
   return (
     <View>
       {/* schedule type */}
-      <View className="flex-row gap-8">
+      <View className="gap-2">
         <Checkbox
-          title="Fixo"
+          title="Sempre no mesmo horário"
           onPress={() => {
             handleToggleScheduleFrequencyType()
 
-            if (values.scheduleType === 'fixo') {
-              return setFieldValue('scheduleType', 'variável')
+            if (values.scheduleType === 'fixed') {
+              return setFieldValue('scheduleType', 'variable')
             }
 
-            setFieldValue('scheduleType', 'fixo')
+            setFieldValue('scheduleType', 'fixed')
           }}
           checked={isFixed}
         />
 
         <Checkbox
-          title="A cada determina hora"
+          title="A cada determinada hora"
           onPress={() => {
             handleToggleScheduleFrequencyType()
 
-            if (values.scheduleType === 'variável') {
-              return setFieldValue('scheduleType', 'fixo')
+            if (values.scheduleType === 'variable') {
+              return setFieldValue('scheduleType', 'fixed')
             }
 
-            setFieldValue('scheduleType', 'variável')
+            setFieldValue('scheduleType', 'variable')
           }}
           checked={isVariable}
         />
