@@ -2,12 +2,14 @@ import { NewCareFormData } from './interfaces/new-care-form-data-type'
 
 export const newCareFormInitialValues: NewCareFormData = {
   careDays: [],
-  category: '',
+  category: 'medicação',
   title: '',
   description: '',
-  scheduleType: 'variável',
+  frequency: 'diariamente',
+  startTime: null,
+  scheduleType: 'variable',
   schedule: '',
-  startsAt: null, // iniciando como nulo apenas para funcionamento da tipagem
+  startsAt: null,
   endsAt: null,
   isContinuous: false,
   medication: {

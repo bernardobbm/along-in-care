@@ -3,10 +3,13 @@ import * as yup from 'yup'
 
 const userTimeZoneDiff = new Date().getTimezoneOffset() / 60
 
-const today = dayjs(new Date())
+const today = dayjs
+  .utc(new Date())
   .startOf('day')
   .subtract(userTimeZoneDiff, 'hours')
   .toDate()
+
+const todayOneYearBefore = dayjs.utc(today).add(1, 'year').toDate()
 
 export const newCareFormSchema = yup.object().shape({
   careDays: yup
@@ -32,7 +35,15 @@ export const newCareFormSchema = yup.object().shape({
     .min(1, 'Campo "Descrição" é obrigatório')
     .required('Campo "Descrição" é obrigatório'),
 
-  scheduleType: yup.mixed().oneOf(['fixo', 'variável']),
+  frequency: yup
+    .mixed<string>()
+    .oneOf(['diariamente', 'semanalmente', 'mensalmente', 'anualmente']),
+
+  startTime: yup
+    .date()
+    .required('Selecione um horário de inicio para o cuidado'),
+
+  scheduleType: yup.string(),
 
   schedule: yup
     .number()
@@ -49,6 +60,8 @@ export const newCareFormSchema = yup.object().shape({
     })
     .required('Campo "Horário" é obrigatório'),
 
+  isContinuous: yup.boolean().default(false),
+
   startsAt: yup
     .date()
     .min(today, 'Selecione uma data de início para o cuidado')
@@ -63,10 +76,16 @@ export const newCareFormSchema = yup.object().shape({
     .nullable()
     .when('isContinuous', {
       is: false,
-      then: (endsAt) => endsAt.required('Selecione uma data de finalização'),
+      then: (endsAt) =>
+        endsAt.required('Selecione uma data de finalização').when('frequency', {
+          is: 'anualmente',
+          then: (endsAt) =>
+            endsAt.min(
+              todayOneYearBefore,
+              'Em cuidados anuais e não contínuos, o cuidado não pode encerar no mesmo ano de inicio',
+            ),
+        }),
     }),
-
-  isContinuous: yup.boolean().default(false),
 
   medication: yup.object().when('category', {
     is: 'medicação',

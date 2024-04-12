@@ -5,6 +5,8 @@ export type NewCareFormData = {
   description: string
   scheduleType: string
   schedule: string
+  frequency: string
+  startTime: Date | null
   startsAt: Date | null
   endsAt: Date | null
   isContinuous: boolean
