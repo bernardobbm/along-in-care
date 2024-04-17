@@ -11,7 +11,7 @@ export function NewRegistrationButton({
   size,
 }: NewRegistrationButtonProps) {
   return (
-    <View className="mb-10 h-20 w-20 items-center justify-center rounded-full border-4 border-gray-900 bg-[#1C6AA3]">
+    <View className="mb-10 h-20 w-20 items-center justify-center rounded-full border-[6px] border-gray-900 bg-primary">
       <AntDesign name="plus" color={color} size={size} />
     </View>
   )
