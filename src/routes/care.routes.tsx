@@ -2,7 +2,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { AddPatient } from '../screens/AddPatient'
 import { NewCareForm } from '../screens/NewCareForm'
+import { NewRecordForm } from '../screens/NewRecordForm'
 
 const { Navigator, Screen } = createNativeStackNavigator()
 
@@ -17,6 +19,8 @@ export function CareRoutes() {
         }}
       >
         <Screen name="NewCareForm" component={NewCareForm} />
+        <Screen name="AddPatient" component={AddPatient} />
+        <Screen name="NewCareRecord" component={NewRecordForm} />
       </Navigator>
     </SafeAreaView>
   )

@@ -4,6 +4,7 @@ import { Login } from '../screens/Login'
 import { Register } from '../screens/Register'
 import { SignIn } from '../screens/SignIn'
 import { AppRoutes } from './app.routes'
+import { CareRoutes } from './care.routes'
 
 const { Navigator, Screen } = createNativeStackNavigator()
 
@@ -21,7 +22,9 @@ export function LoginRoutes() {
         <Screen name="SignIn" component={SignIn} />
         <Screen name="Login" component={Login} />
         <Screen name="Register" component={Register} />
+
         <Screen name="AppHome" component={AppRoutes} />
+        <Screen name="CareRoutes" component={CareRoutes} />
       </Navigator>
     </>
   )
