@@ -1,7 +1,10 @@
 {
-  "extends": ["@rocketseat/eslint-config/react"],
+  "extends": [
+    "@rocketseat/eslint-config/react"
+  ],
   "rules": {
     "camelcase": "off",
-    "react/no-unescaped-entities": "off"
+    "react/no-unescaped-entities": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
   }
 }
