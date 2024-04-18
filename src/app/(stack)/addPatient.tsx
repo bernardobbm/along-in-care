@@ -1,26 +1,26 @@
 import { AntDesign } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
+import dayjs from 'dayjs'
+import { useRouter } from 'expo-router'
+import { Formik } from 'formik'
 import { SafeAreaView, Text, View } from 'react-native'
 
-import dayjs from 'dayjs'
-import { Formik } from 'formik'
-import { SelectDateOfBirth } from '../components/AddPatientComponents/SelectDateOfBirth'
-import { SelectGender } from '../components/AddPatientComponents/SelectGender'
-import { Button } from '../components/Button'
-import { Header } from '../components/Header'
-import { HeaderButton } from '../components/HeaderButton'
-import { Input } from '../components/Input'
-import { Form } from '../components/NewCareFormComponents'
-import { AddPatientDataType } from '../shared/interfaces/add-patient-form-data-type'
-import { addPatientFormSchema } from './validations/add-patient-form-fields-validation'
+import { SelectDateOfBirth } from '../../components/AddPatientComponents/SelectDateOfBirth'
+import { SelectGender } from '../../components/AddPatientComponents/SelectGender'
+import { Button } from '../../components/Button'
+import { Header } from '../../components/Header'
+import { HeaderButton } from '../../components/HeaderButton'
+import { Input } from '../../components/Input'
+import { Form } from '../../components/NewCareFormComponents'
+import { AddPatientDataType } from '../../shared/interfaces/add-patient-form-data-type'
+import { addPatientFormSchema } from '../../validations/add-patient-form-fields-validation'
 
-export function AddPatient() {
-  const navigation = useNavigation()
+export default function AddPatient() {
+  const router = useRouter()
 
   function handleAddPatient(formData: AddPatientDataType) {
     console.log(formData)
 
-    // navigation.navigate('AppHome')
+    router.back()
   }
 
   return (
@@ -44,12 +44,7 @@ export function AddPatient() {
                   icon={
                     <AntDesign name="arrowleft" color={'#eaeaea'} size={24} />
                   }
-                  onPress={() =>
-                    navigation.reset({
-                      index: 0,
-                      routes: [{ name: 'AppHome' }],
-                    })
-                  }
+                  onPress={() => router.back()}
                 />
               }
             />

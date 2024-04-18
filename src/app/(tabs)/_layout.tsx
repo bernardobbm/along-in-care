@@ -4,48 +4,43 @@ import {
   FontAwesome5,
   Ionicons,
 } from '@expo/vector-icons/'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { Tabs } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
 import { View } from 'react-native'
 
-import { NewRegistrationButton } from '../components/NewRegistrationButton'
-import { Home } from '../screens/Home'
-import { Prescriptions } from '../screens/Prescriptions'
-import { Records } from '../screens/Records'
-import { Settings } from '../screens/Settings'
-import { CareRoutes } from './care.routes'
+import { NewRegistrationButton } from '../../components/NewRegistrationButton'
 
-const { Navigator, Screen } = createBottomTabNavigator()
-
-export function AppRoutes() {
+export default function TabRoutesLayout() {
   return (
     <View className="flex-1 bg-gray-900">
-      <Navigator
+      <StatusBar style="light" backgroundColor="#121215" />
+
+      <Tabs
+        sceneContainerStyle={{
+          backgroundColor: '#121215',
+        }}
         screenOptions={{
           headerShown: false,
-
-          tabBarStyle: {
-            backgroundColor: '#1C6AA3',
-            borderColor: 'transparent',
-            height: 60,
-            margin: 12,
-            marginBottom: 15,
-            borderRadius: 15,
-          },
-
+          tabBarActiveTintColor: '#eaeaea',
+          tabBarInactiveTintColor: '#eaeaea',
           tabBarItemStyle: {
             paddingBottom: 5,
             paddingTop: 5,
           },
 
-          tabBarActiveTintColor: '#eaeaea',
-          tabBarInactiveTintColor: '#eaeaea',
+          tabBarStyle: {
+            backgroundColor: '#1C6AA3',
+            height: 60,
+            margin: 12,
+            borderRadius: 15,
+            borderColor: 'transparent',
+          },
         }}
-        initialRouteName="Home"
       >
-        <Screen
-          name="Home"
-          component={Home}
+        <Tabs.Screen
+          name="index"
           options={{
+            title: 'Home',
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons
                 name={focused ? 'home-sharp' : 'home-outline'}
@@ -56,10 +51,10 @@ export function AppRoutes() {
           }}
         />
 
-        <Screen
-          name="Registros"
-          component={Records}
+        <Tabs.Screen
+          name="records"
           options={{
+            title: 'Registros',
             tabBarIcon: ({ color, size, focused }) => (
               <FontAwesome
                 name={focused ? 'file-text' : 'file-text-o'}
@@ -70,9 +65,8 @@ export function AppRoutes() {
           }}
         />
 
-        <Screen
-          name="AppNewCare"
-          component={CareRoutes}
+        <Tabs.Screen
+          name="newCareForm"
           options={{
             title: '',
             tabBarIcon: ({ color, size }) => (
@@ -84,11 +78,11 @@ export function AppRoutes() {
           }}
         />
 
-        <Screen
-          name="Prescrições"
-          component={Prescriptions}
+        <Tabs.Screen
+          name="prescriptions"
           options={{
-            tabBarIcon: ({ focused, size, color }) =>
+            title: 'Prescrições',
+            tabBarIcon: ({ color, size, focused }) =>
               focused ? (
                 <FontAwesome5 name="archive" size={size} color={color} />
               ) : (
@@ -97,10 +91,10 @@ export function AppRoutes() {
           }}
         />
 
-        <Screen
-          name="Configurações"
-          component={Settings}
+        <Tabs.Screen
+          name="settings"
           options={{
+            title: 'Configurações',
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons
                 name={focused ? 'settings' : 'settings-outline'}
@@ -110,7 +104,7 @@ export function AppRoutes() {
             ),
           }}
         />
-      </Navigator>
+      </Tabs>
     </View>
   )
 }

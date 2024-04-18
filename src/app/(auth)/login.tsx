@@ -1,19 +1,19 @@
-import { useNavigation } from '@react-navigation/native'
+import { useRouter } from 'expo-router'
 import { Formik } from 'formik'
 import { Text, View } from 'react-native'
 
-import { Button } from '../components/Button'
-import { Input } from '../components/Input'
-import { LoginDataType } from '../shared/interfaces/login-form-data-type'
-import { loginFormSchema } from './validations/login-form-fields-validation'
+import { Button } from '../../components/Button'
+import { Input } from '../../components/Input'
+import { LoginDataType } from '../../shared/interfaces/login-form-data-type'
+import { loginFormSchema } from '../../validations/login-form-fields-validation'
 
-export function Login() {
-  const { navigate } = useNavigation()
+export default function Login() {
+  const router = useRouter()
 
   function handleLoginFormSubmit(formData: LoginDataType) {
     console.log(formData)
 
-    navigate('AppHome')
+    router.push('/(tabs)')
   }
 
   return (
@@ -23,7 +23,7 @@ export function Login() {
       validationSchema={loginFormSchema}
     >
       {({ values, errors, touched, handleChange, handleSubmit }) => (
-        <View className="h-screen bg-gray-900">
+        <View className="flex-1 bg-gray-900">
           <View className="h-80 w-screen items-center justify-center space-y-8 rounded-b-[50px] bg-primary px-8">
             <Text className="font-body_semibold text-3xl text-gray-50">
               Login

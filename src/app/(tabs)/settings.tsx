@@ -1,10 +1,10 @@
 import { Text, TouchableOpacity, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { Header } from '../components/Header'
 
-export function Settings() {
+import { Header } from '../../components/Header'
+
+export default function Settings() {
   return (
-    <SafeAreaView className="h-screen bg-gray-900 px-8">
+    <View className="h-screen px-8 py-2">
       <Header text="Configurações" />
 
       <View>
@@ -12,6 +12,6 @@ export function Settings() {
           <Text className="text-gray-50">Apagar conta</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   )
 }

@@ -1,19 +1,19 @@
-import { useNavigation } from '@react-navigation/native'
+import { useRouter } from 'expo-router'
 import { Formik } from 'formik'
 import { ScrollView, Text, View } from 'react-native'
 
-import { Button } from '../components/Button'
-import { Input } from '../components/Input'
-import { LoginDataType } from '../shared/interfaces/login-form-data-type'
-import { registerFormSchema } from './validations/register-form-fields-validation'
+import { Button } from '../../components/Button'
+import { Input } from '../../components/Input'
+import { LoginDataType } from '../../shared/interfaces/login-form-data-type'
+import { registerFormSchema } from '../../validations/register-form-fields-validation'
 
-export function Register() {
-  const { navigate } = useNavigation()
+export default function Register() {
+  const router = useRouter()
 
   function handleRegisterFormSubmit(formData: LoginDataType) {
     console.log(formData)
 
-    navigate('AppHome')
+    router.push('/(tabs)')
   }
 
   return (
@@ -29,7 +29,7 @@ export function Register() {
       validationSchema={registerFormSchema}
     >
       {({ values, errors, touched, handleChange, handleSubmit }) => (
-        <View className="h-screen bg-gray-900">
+        <View className="flex-1 bg-gray-900">
           <View className="h-80 w-screen items-center justify-center space-y-8 rounded-b-[50px] bg-primary px-8">
             <Text className="font-body_semibold text-3xl text-gray-50">
               Cadastre-se

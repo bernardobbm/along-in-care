@@ -1,12 +1,15 @@
 {
   "name": "along-in-care",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
+  },
+  "resolutions": {
+    "react-refresh": "~0.14.0"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.3",
@@ -34,7 +37,8 @@
     "react-native-svg": "13.9.0",
     "react-native-vector-icons": "^10.0.0",
     "tailwind-variants": "^0.2.1",
-    "yup": "^1.3.3"
+    "yup": "^1.3.3",
+    "react-native-web": "~0.19.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
