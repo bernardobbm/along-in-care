@@ -19,7 +19,7 @@ export function StartTime() {
             value: values.startTime || new Date(),
 
             onChange: (_, time) =>
-              setFieldValue('startTime', dayjs.utc(time).toDate()),
+              setFieldValue('startTime', dayjs(time).toDate()),
           })
         }}
         activeOpacity={0.7}

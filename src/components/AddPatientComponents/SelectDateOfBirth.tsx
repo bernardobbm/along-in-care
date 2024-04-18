@@ -33,7 +33,7 @@ export function SelectDateOfBirth() {
       >
         {values.dateOfBirth ? (
           <Text className="font-label text-base text-gray-50">
-            {dayjs.utc(values.dateOfBirth).format('DD-MM-YYYY')}
+            {dayjs(values.dateOfBirth).format('DD-MM-YYYY')}
           </Text>
         ) : (
           <Text className="font-label text-base text-gray-400">DD-MM-AAAA</Text>
