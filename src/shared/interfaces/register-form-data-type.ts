@@ -1,7 +1,4 @@
-export type RegisterFormDataType = {
-  name: string
-  lastName: string
-  email: string
-  password: string
-  confirmPassword: string
-}
+import * as yup from 'yup'
+import { registerFormSchema } from '../../validations/register-form-fields-validation'
+
+export type RegisterFormDataType = yup.InferType<typeof registerFormSchema>
