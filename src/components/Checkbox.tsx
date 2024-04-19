@@ -1,35 +1,75 @@
-import { Feather } from '@expo/vector-icons'
+import { Feather, FontAwesome } from '@expo/vector-icons'
 import {
   Text,
   TouchableOpacity,
   TouchableOpacityProps,
   View,
 } from 'react-native'
+import { VariantProps, tv } from 'tailwind-variants'
 
-interface CheckboxProps extends TouchableOpacityProps {
-  title: string
-  checked?: boolean
-}
+const checkBox = tv({
+  base: 'rounded-lg border-x border-y border-gray-400 bg-gray-600',
+  variants: {
+    type: {
+      checkBox: 'h-6 w-6',
+      radio: 'h-5 w-5 rounded-full',
+    },
+    checked: {
+      true: 'items-center justify-center border-primary bg-[#439CDE]',
+    },
+    error: {
+      true: 'border-[#e83f5b]',
+    },
+  },
+  defaultVariants: {
+    type: 'checkBox',
+    checked: false,
+  },
+})
 
-export function Checkbox({ title, checked = false, ...rest }: CheckboxProps) {
+const checkBoxLabel = tv({
+  base: 'font-body ml-3 text-gray-50',
+  variants: {
+    labelSize: {
+      base: 'text-base',
+      sm: 'text-sm',
+    },
+  },
+  defaultVariants: {
+    labelSize: 'base',
+  },
+})
+
+type CheckboxProps = TouchableOpacityProps &
+  VariantProps<typeof checkBox> &
+  VariantProps<typeof checkBoxLabel> & {
+    title: string
+    checked?: boolean
+  }
+
+export function Checkbox({
+  title,
+  checked,
+  labelSize,
+  error,
+  type = 'checkBox',
+  ...rest
+}: CheckboxProps) {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
       className="mb-2 flex-row items-center"
       {...rest}
     >
-      {checked ? (
-        <View
-          className="h-6 w-6
-          items-center justify-center rounded-lg border-2 border-[#1C6AA3] bg-[#439CDE]"
-        >
-          <Feather name="check" size={12} color={'#eaeaea'} />
-        </View>
-      ) : (
-        <View className="h-6 w-6 rounded-lg border-2 border-gray-400 bg-gray-600" />
-      )}
+      <View className={checkBox({ checked, type, error })}>
+        {checked && type === 'checkBox' ? (
+          <Feather name="check" size={12} color="#eaeaea" />
+        ) : checked && type === 'radio' ? (
+          <FontAwesome name="circle" size={10} color="#eaeaea" />
+        ) : null}
+      </View>
 
-      <Text className="ml-3 font-body text-base text-gray-50">{title}</Text>
+      <Text className={checkBoxLabel({ labelSize })}>{title}</Text>
     </TouchableOpacity>
   )
 }
