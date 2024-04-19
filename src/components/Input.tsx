@@ -1,4 +1,12 @@
-import { Text, TextInput, TextInputProps, View } from 'react-native'
+import { useState } from 'react'
+import {
+  NativeSyntheticEvent,
+  Text,
+  TextInput,
+  TextInputContentSizeChangeEventData,
+  TextInputProps,
+  View,
+} from 'react-native'
 import { VariantProps, tv } from 'tailwind-variants'
 import { ErrorMessage } from './NewCareFormComponents/ErrorMessageForm'
 
@@ -23,7 +31,25 @@ type InputFormProps = TextInputProps &
     errorMessage?: string
   }
 
-export function Input({ label, error, errorMessage, ...rest }: InputFormProps) {
+export function Input({
+  label,
+  error,
+  errorMessage,
+  multiline,
+  ...rest
+}: InputFormProps) {
+  const [height, setHeight] = useState(0)
+
+  const multilineAttributes = multiline
+    ? {
+        multiline: true,
+        onContentSizeChange: (
+          event: NativeSyntheticEvent<TextInputContentSizeChangeEventData>,
+        ) => setHeight(event.nativeEvent.contentSize.height),
+        style: { height: Math.max(35, height) },
+      }
+    : {}
+
   return (
     <View className={`${label ? 'mt-5' : ''}`}>
       {label ? (
@@ -34,6 +60,7 @@ export function Input({ label, error, errorMessage, ...rest }: InputFormProps) {
         className={input({ error })}
         cursorColor="#eaeaea"
         placeholderTextColor="#56565a"
+        {...multilineAttributes}
         {...rest}
       />
 
