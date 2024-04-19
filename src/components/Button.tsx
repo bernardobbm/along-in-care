@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, forwardRef } from 'react'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import { VariantProps, tv } from 'tailwind-variants'
 
@@ -27,20 +27,18 @@ type ButtonProps = TouchableOpacityProps &
     extraClasses?: string
   }
 
-export function Button({
-  color,
-  size,
-  children,
-  extraClasses,
-  ...rest
-}: ButtonProps) {
-  return (
-    <TouchableOpacity
-      activeOpacity={0.7}
-      className={button({ color, size, className: extraClasses })}
-      {...rest}
-    >
-      {children}
-    </TouchableOpacity>
-  )
-}
+// eslint-disable-next-line react/display-name
+export const Button = forwardRef<TouchableOpacity, ButtonProps>(
+  ({ color, size, children, extraClasses, ...rest }, ref) => {
+    return (
+      <TouchableOpacity
+        activeOpacity={0.7}
+        className={button({ color, size, className: extraClasses })}
+        ref={ref}
+        {...rest}
+      >
+        {children}
+      </TouchableOpacity>
+    )
+  },
+)
