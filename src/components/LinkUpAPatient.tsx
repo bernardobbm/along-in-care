@@ -1,3 +1,4 @@
+import { Link } from 'expo-router'
 import { Text, TouchableOpacity, View } from 'react-native'
 
 export function LinkUpAPatient() {
@@ -8,11 +9,13 @@ export function LinkUpAPatient() {
       </Text>
 
       <View className="items-center gap-2">
-        <TouchableOpacity activeOpacity={0.7}>
-          <Text className="font-body text-lg text-primary">
-            Adicione um paciente
-          </Text>
-        </TouchableOpacity>
+        <Link href="/(stack)/addPatient" asChild>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Text className="font-body text-lg text-primary">
+              Adicione um paciente
+            </Text>
+          </TouchableOpacity>
+        </Link>
 
         <Text className="font-body text-lg text-gray-300">ou</Text>
 
