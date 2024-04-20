@@ -1,10 +1,13 @@
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import { Text, TouchableOpacity, View } from 'react-native'
 
 import { useFormikContext } from 'formik'
 import { NewCareFormData } from '../../shared/interfaces/new-care-form-data-type'
 import { ErrorMessage } from './ErrorMessageForm'
+
+dayjs.extend(utc)
 
 type SelectDateFieldForm = {
   name: 'startsAt' | 'endsAt'
@@ -16,10 +19,10 @@ export function SelectDateFieldForm({ name }: SelectDateFieldForm) {
 
   function handleDateSelect(dateType: 'startsAt' | 'endsAt', date: Date) {
     if (dateType === 'endsAt') {
-      return dayjs(date).endOf('day').toDate() // end of day of the day selected
+      return dayjs.utc(date).endOf('day').toDate() // end of day of the day selected
     }
 
-    return dayjs(date).startOf('day').toDate() // start of day of the day selected
+    return dayjs.utc(date).toDate() // start of day of the day selected
   }
 
   return (

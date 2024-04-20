@@ -1,9 +1,12 @@
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import { useFormikContext } from 'formik'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { NewCareFormData } from '../../shared/interfaces/new-care-form-data-type'
 import { ErrorMessage } from './ErrorMessageForm'
+
+dayjs.extend(utc)
 
 export function StartTime() {
   const { values, setFieldValue, errors, touched } =
@@ -15,11 +18,11 @@ export function StartTime() {
         onPress={() => {
           DateTimePickerAndroid.open({
             mode: 'time',
-            minimumDate: new Date(),
-            value: values.startTime || new Date(),
+            minimumDate: dayjs.utc(new Date()).toDate(),
+            value: values.startTime || dayjs.utc(new Date()).toDate(),
 
             onChange: (_, time) =>
-              setFieldValue('startTime', dayjs(time).toDate()),
+              setFieldValue('startTime', dayjs.utc(time).toDate()),
           })
         }}
         activeOpacity={0.7}

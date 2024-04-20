@@ -51,35 +51,33 @@ export function ScheduleFrequency() {
         />
       </View>
 
-      {/* schedule */}
+      {/* interval */}
       <View>
         <View className="mt-3 flex-row items-center">
-          {isFixed ? (
-            <Text className="font-body text-lg text-gray-200">
-              Todo dia às{' '}
-            </Text>
-          ) : (
-            <Text className="font-body text-lg text-gray-200">A cada </Text>
-          )}
+          {isVariable ? (
+            <>
+              <Text className="font-body text-lg text-gray-200">A cada </Text>
 
-          <TextInput
-            className={`h-8 w-10 rounded-lg border-2 bg-gray-600 px-2 text-center font-body_semibold text-lg text-gray-50  ${
-              errors.schedule && touched.schedule
-                ? 'border-[#e83f5b]'
-                : 'border-gray-600'
-            }`}
-            value={String(values.schedule)}
-            onChangeText={handleChange('schedule')}
-            keyboardType="numeric"
-            cursorColor="#eaeaea"
-            maxLength={2}
-          />
+              <TextInput
+                className={`h-8 w-10 rounded-lg border-2 bg-gray-600 px-2 text-center font-body_semibold text-lg text-gray-50  ${
+                  errors.interval && touched.interval
+                    ? 'border-[#e83f5b]'
+                    : 'border-gray-600'
+                }`}
+                value={isFixed ? '' : String(values.interval)}
+                onChangeText={handleChange('interval')}
+                keyboardType="numeric"
+                cursorColor="#eaeaea"
+                maxLength={2}
+              />
 
-          <Text className="font-body text-lg text-gray-200"> horas</Text>
+              <Text className="font-body text-lg text-gray-200"> horas</Text>
+            </>
+          ) : null}
         </View>
 
-        {errors.schedule && touched.schedule && (
-          <ErrorMessage>{errors.schedule}</ErrorMessage>
+        {errors.interval && touched.interval && (
+          <ErrorMessage>{errors.interval}</ErrorMessage>
         )}
       </View>
     </View>
