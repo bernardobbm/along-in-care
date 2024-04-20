@@ -8,14 +8,14 @@ export const newCareFormInitialValues: NewCareFormData = {
   frequency: 'diariamente',
   startTime: null,
   scheduleType: 'variable',
-  schedule: '',
+  interval: '',
   startsAt: null,
   endsAt: null,
   isContinuous: false,
   medication: {
-    administrationRoute: '',
+    administrationRoute: 'oral',
     quantity: '',
-    unit: '',
+    unit: 'ml',
   },
   hygiene: {
     hygieneCategory: '',

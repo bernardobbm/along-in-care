@@ -1,12 +1,7 @@
 import dayjs from 'dayjs'
 import * as yup from 'yup'
 
-const userTimeZoneDiff = new Date().getTimezoneOffset() / 60
-
-const today = dayjs(new Date())
-  .startOf('day')
-  .subtract(userTimeZoneDiff, 'hours')
-  .toDate()
+const today = dayjs(new Date()).startOf('day').toDate()
 
 const todayOneYearBefore = dayjs(today).add(1, 'year').toDate()
 
@@ -44,15 +39,15 @@ export const newCareFormSchema = yup.object().shape({
 
   scheduleType: yup.string(),
 
-  schedule: yup
+  interval: yup
     .number()
     .typeError('Digite um horário válido (apenas números)')
     .moreThan(-1, 'O horário não pode ser um valor negativo')
     .max(23, 'O limite para os horários é de 23 horas')
     .when('scheduleType', {
       is: 'variável',
-      then: (schedule) =>
-        schedule.moreThan(
+      then: (interval) =>
+        interval.moreThan(
           0,
           'O intervalo de horas para horários variáveis devem ser de no mínimo 1 hora',
         ),

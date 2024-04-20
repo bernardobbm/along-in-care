@@ -4,7 +4,7 @@ export type NewCareFormData = {
   title: string
   description: string
   scheduleType: string
-  schedule: string
+  interval: string
   frequency: string
   startTime: Date | null
   startsAt: Date | null
