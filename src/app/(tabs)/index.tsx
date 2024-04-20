@@ -7,7 +7,7 @@ import { LinkUpAPatient } from '../../components/LinkUpAPatient'
 
 export default function Home() {
   const username = 'primeiro nome'
-  const havePatient = false
+  const havePatient = true
 
   return (
     <View className="flex-1 px-8 py-2">
@@ -17,8 +17,8 @@ export default function Home() {
 
       {havePatient ? (
         <ScrollView className="mb-6" showsVerticalScrollIndicator={false}>
-          <CareList category="Medicamentos" />
-          <CareList category="Alimentação" />
+          <CareList category="Medicação" />
+          <CareList category="Recomendações Alimentares" />
           <CareList category="Higiene" />
         </ScrollView>
       ) : (
