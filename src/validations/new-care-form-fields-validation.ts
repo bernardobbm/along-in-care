@@ -47,12 +47,13 @@ export const newCareFormSchema = yup.object().shape({
     .when('scheduleType', {
       is: 'variável',
       then: (interval) =>
-        interval.moreThan(
-          0,
-          'O intervalo de horas para horários variáveis devem ser de no mínimo 1 hora',
-        ),
-    })
-    .required('Campo "Horário" é obrigatório'),
+        interval
+          .moreThan(
+            0,
+            'O intervalo de horas para horários variáveis devem ser de no mínimo 1 hora',
+          )
+          .required('Campo "Horário" é obrigatório'),
+    }),
 
   isContinuous: yup.boolean().default(false),
 
