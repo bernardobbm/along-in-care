@@ -8,7 +8,6 @@ import { Header } from '../../components/Header'
 import { HeaderButton } from '../../components/HeaderButton'
 import { Input } from '../../components/Input'
 import { Form } from '../../components/NewCareFormComponents'
-import { ObservationsInCareAccomplishment } from '../../components/NewRecordFormComponents/ObservationsInCareAccomplishment'
 import { SelectCareAccomplishment } from '../../components/NewRecordFormComponents/SelectCareAccomplishment'
 import { NewRecordFormDataType } from '../../shared/interfaces/new-record-form-data-type'
 import { newRecordFormInitialValues } from '../../shared/new-record-form-initial-values'
@@ -67,10 +66,6 @@ export default function NewRecordForm() {
                 value={values.description}
                 onChangeText={handleChange('description')}
               />
-            </Form.Field>
-
-            <Form.Field>
-              <ObservationsInCareAccomplishment />
             </Form.Field>
           </ScrollView>
 
