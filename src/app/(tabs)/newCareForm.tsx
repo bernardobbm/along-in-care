@@ -48,8 +48,6 @@ export default function NewCareForm() {
           formData.startTime!.getUTCMinutes(),
         )
 
-    delete formData.startTime
-
     if (formData.isContinuous && formData.endsAt) {
       formData.endsAt = null
     }
