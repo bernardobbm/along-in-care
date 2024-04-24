@@ -2,7 +2,7 @@ import { ScrollView, Text, View } from 'react-native'
 import { CareListItem } from './CareListItem'
 
 interface CareListProps {
-  category: 'Medicamentos' | 'Alimentação' | 'Higiene'
+  category: 'Medicação' | 'Recomendações Alimentares' | 'Higiene'
 }
 
 export function CareList({ category }: CareListProps) {
@@ -11,9 +11,9 @@ export function CareList({ category }: CareListProps) {
       <Text className="font-body text-xl text-gray-50">{category}</Text>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* <NoItemsRegistered category={category} /> */}
+        {/* <NoItemsRegistered category={category} onPress={() => null} /> */}
 
-        <CareListItem />
+        <CareListItem title={''} description={''} href={''} />
       </ScrollView>
     </View>
   )
