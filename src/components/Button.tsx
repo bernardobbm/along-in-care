@@ -14,6 +14,9 @@ const button = tv({
       base: 'w-36 h-12',
       lg: 'w-56 px-5 py-3',
     },
+    disabled: {
+      true: 'bg-primary/60',
+    },
   },
   defaultVariants: {
     size: 'base',
@@ -29,11 +32,11 @@ type ButtonProps = TouchableOpacityProps &
 
 // eslint-disable-next-line react/display-name
 export const Button = forwardRef<TouchableOpacity, ButtonProps>(
-  ({ color, size, children, extraClasses, ...rest }, ref) => {
+  ({ color, size, disabled, children, extraClasses, ...rest }, ref) => {
     return (
       <TouchableOpacity
         activeOpacity={0.7}
-        className={button({ color, size, className: extraClasses })}
+        className={button({ color, size, disabled, className: extraClasses })}
         ref={ref}
         {...rest}
       >
