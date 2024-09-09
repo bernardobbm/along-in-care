@@ -1,19 +1,45 @@
 import { useRouter } from 'expo-router'
 import { Formik } from 'formik'
+import { Spinner, useToast } from 'native-base'
+import { useState } from 'react'
 import { Text, View } from 'react-native'
 
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
+import { useAuth } from '../../hooks/useAuth'
 import { LoginDataType } from '../../shared/interfaces/login-form-data-type'
+import { AppError } from '../../utils/AppError'
 import { loginFormSchema } from '../../validations/login-form-fields-validation'
 
 export default function Login() {
+  const [isLoading, setIsLoading] = useState(false)
+  const toast = useToast()
+
+  const { signIn } = useAuth()
+
   const router = useRouter()
 
-  function handleLoginFormSubmit(formData: LoginDataType) {
-    console.log(formData)
+  async function handleLoginFormSubmit(formData: LoginDataType) {
+    try {
+      setIsLoading(true)
 
-    router.push('/(tabs)')
+      await signIn(formData.email, formData.password)
+
+      router.replace('/(tabs)')
+    } catch (err) {
+      if (err instanceof AppError) {
+        if (!toast.isActive(err.message)) {
+          toast.show({
+            description: err.message,
+            placement: 'top',
+            bgColor: 'danger.700',
+            id: err.message,
+          })
+        }
+
+        setIsLoading(false)
+      }
+    }
   }
 
   return (
@@ -61,10 +87,15 @@ export default function Login() {
               color="confirm"
               extraClasses="self-center mt-8"
               onPress={() => handleSubmit()}
+              disabled={isLoading}
             >
-              <Text className="font-body_semibold text-base text-zinc-50">
-                Entrar
-              </Text>
+              {isLoading ? (
+                <Spinner size={'lg'} color="#eaeaea" />
+              ) : (
+                <Text className="font-body_semibold text-base text-zinc-50">
+                  Entrar
+                </Text>
+              )}
             </Button>
           </View>
         </View>

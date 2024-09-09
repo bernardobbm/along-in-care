@@ -2,18 +2,51 @@ import { useRouter } from 'expo-router'
 import { Formik } from 'formik'
 import { ScrollView, Text, View } from 'react-native'
 
+import { Spinner, useToast } from 'native-base'
+import { useState } from 'react'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
-import { LoginDataType } from '../../shared/interfaces/login-form-data-type'
+import { api } from '../../libs/api'
+import { RegisterFormDataType } from '../../shared/interfaces/register-form-data-type'
+import { AppError } from '../../utils/AppError'
 import { registerFormSchema } from '../../validations/register-form-fields-validation'
 
 export default function Register() {
+  const [isLoading, setIsLoading] = useState(false)
+  const toast = useToast()
+
   const router = useRouter()
 
-  function handleRegisterFormSubmit(formData: LoginDataType) {
-    console.log(formData)
+  async function handleRegisterFormSubmit(formData: RegisterFormDataType) {
+    try {
+      setIsLoading(true)
 
-    router.push('/(tabs)')
+      const { data } = await api.post('/caregivers', formData)
+
+      console.log(data)
+
+      toast.show({
+        description:
+          'Usuário criado com sucesso. Faça login para entrar no app.',
+        placement: 'top',
+        bgColor: 'green.700',
+      })
+
+      router.replace('/(auth)/login')
+    } catch (err) {
+      if (err instanceof AppError) {
+        if (!toast.isActive(err.message)) {
+          toast.show({
+            description: err.message,
+            placement: 'top',
+            bgColor: 'danger.700',
+            id: err.message,
+          })
+        }
+      }
+
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -97,10 +130,15 @@ export default function Register() {
             color="confirm"
             extraClasses="self-center my-5"
             onPress={() => handleSubmit()}
+            disabled={isLoading}
           >
-            <Text className="font-body_semibold text-base text-zinc-50">
-              Cadastre-se
-            </Text>
+            {isLoading ? (
+              <Spinner size={'lg'} color="#eaeaea" />
+            ) : (
+              <Text className="font-body_semibold text-base text-zinc-50">
+                Cadastre-se
+              </Text>
+            )}
           </Button>
         </View>
       )}
