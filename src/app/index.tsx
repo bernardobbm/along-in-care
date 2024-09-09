@@ -1,11 +1,20 @@
 import { AntDesign } from '@expo/vector-icons'
 import { Text, View } from 'react-native'
 
-import { Link } from 'expo-router'
+import { Link, Redirect } from 'expo-router'
 import Logo from '../assets/logo.svg'
 import { Button } from '../components/Button'
+import { useAuth } from '../hooks/useAuth'
 
 export default function SignIn() {
+  const { caregiver } = useAuth()
+
+  if (caregiver.name) {
+    Redirect({
+      href: '/(tabs)',
+    })
+  }
+
   return (
     <View className="flex-1 items-center gap-12 bg-gray-900 px-8">
       <View className="h-[420px] w-screen items-center justify-center gap-y-5 rounded-b-[50px] bg-primary px-8">
