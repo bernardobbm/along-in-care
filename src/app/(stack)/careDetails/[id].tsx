@@ -23,7 +23,7 @@ export default function CareDetails() {
     frequency: 'diariamente',
     startTime: null,
     scheduleType: 'variable',
-    schedule: '',
+    interval: '',
     startsAt: null,
     endsAt: null,
     isContinuous: false,
