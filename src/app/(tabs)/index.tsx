@@ -4,18 +4,18 @@ import { CareDays } from '../../components/CareDays'
 import { CareList } from '../../components/CareList'
 import { Header } from '../../components/Header'
 import { LinkUpAPatient } from '../../components/LinkUpAPatient'
+import { useAuth } from '../../hooks/useAuth'
 
 export default function Home() {
-  const username = 'primeiro nome'
-  const havePatient = true
+  const { caregiver } = useAuth()
 
   return (
     <View className="flex-1 px-8 py-2">
-      <Header text={`Olá, ${username}`} />
+      <Header text={`Olá, ${caregiver.name}`} />
 
       <CareDays />
 
-      {havePatient ? (
+      {caregiver.patient ? (
         <ScrollView className="mb-6" showsVerticalScrollIndicator={false}>
           <CareList category="Medicação" />
           <CareList category="Recomendações Alimentares" />
