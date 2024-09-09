@@ -13,7 +13,9 @@ import {
   useFonts,
 } from '@expo-google-fonts/roboto-condensed'
 import { StatusBar } from 'expo-status-bar'
+import { NativeBaseProvider } from 'native-base'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { AuthContextProvider } from '../contexts/AuthContext'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -38,11 +40,16 @@ export default function AuthRoutesLayout() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-900" onLayout={onLayoutRootView}>
-      <StatusBar style="light" translucent backgroundColor="#1C6AA3" />
+      <NativeBaseProvider>
+        <AuthContextProvider>
+          <StatusBar style="light" translucent backgroundColor="#1C6AA3" />
 
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="index" />
-      </Stack>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" />
+            <Stack.Screen name="(tabs)" />
+          </Stack>
+        </AuthContextProvider>
+      </NativeBaseProvider>
     </SafeAreaView>
   )
 }
