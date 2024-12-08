@@ -10,8 +10,8 @@ export function NoItemsRegistered({
   onPress,
 }: NoItemsRegisteredProps) {
   return (
-    <View className="items-center justify-center">
-      <Text className="font-body text-lg text-gray-300">
+    <View className="mt-5 items-center justify-center">
+      <Text className="text-center font-body text-lg text-gray-300">
         Sem itens cadastrados {category === '' ? null : `em "${category}"`}
       </Text>
 
