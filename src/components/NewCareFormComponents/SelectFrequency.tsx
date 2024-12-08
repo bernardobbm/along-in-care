@@ -11,7 +11,7 @@ export function SelectFrequency({ frequencies }: SelectFrequencyProps) {
   const { handleChange, values } = useFormikContext<NewCareFormData>()
 
   return (
-    <View className="w-44">
+    <View className="w-40">
       <View className="h-12 justify-center overflow-hidden rounded-md border-2 border-gray-400 text-base">
         <Picker
           dropdownIconColor="#56565a"

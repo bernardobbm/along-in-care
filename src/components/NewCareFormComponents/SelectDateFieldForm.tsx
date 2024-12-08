@@ -26,7 +26,7 @@ export function SelectDateFieldForm({ name }: SelectDateFieldForm) {
   }
 
   return (
-    <View className="w-40">
+    <View className="w-36">
       <TouchableOpacity
         onPress={() => {
           DateTimePickerAndroid.open({

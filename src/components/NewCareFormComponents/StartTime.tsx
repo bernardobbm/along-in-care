@@ -13,7 +13,7 @@ export function StartTime() {
     useFormikContext<NewCareFormData>()
 
   return (
-    <View className="w-[150px]">
+    <View className="w-36">
       <TouchableOpacity
         onPress={() => {
           DateTimePickerAndroid.open({
