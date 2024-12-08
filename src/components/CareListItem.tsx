@@ -1,22 +1,48 @@
+import {
+  FontAwesome5,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from '@expo/vector-icons'
 import { Link } from 'expo-router'
 import { Text, TouchableOpacity, View } from 'react-native'
 
 type ListItemProps = {
+  category: 'Medicação' | 'Recomendações Alimentares' | 'Higiene' | 'Outros'
   title: string
   description: string
-  href: string
+  id: string
 }
 
-export function CareListItem({ title, description, href }: ListItemProps) {
+export function CareListItem({
+  category,
+  title,
+  description,
+  id,
+}: ListItemProps) {
   return (
-    <Link href="/(stack)/careDetails/123" asChild>
+    <Link href={`/(stack)/careDetails/${id}`} asChild>
       <TouchableOpacity
         activeOpacity={0.7}
-        className="h-24 w-fit flex-row overflow-hidden rounded-lg bg-gray-700"
+        className="mt-4 h-24 w-fit flex-row overflow-hidden rounded-lg bg-gray-700"
       >
         <View className="aspect-square h-fit items-center justify-center bg-gray-600 px-3">
-          {/* //todo: colocar algum ícone aqui */}
-          <Text className="text-white">TO DO: Icon here</Text>
+          {category === 'Medicação' ? (
+            <FontAwesome5
+              name="prescription-bottle-alt"
+              size={40}
+              color="#eaeaea"
+            />
+          ) : category === 'Higiene' ? (
+            <FontAwesome5 name="hands-wash" size={40} color="#eaeaea" />
+          ) : category === 'Recomendações Alimentares' ? (
+            <MaterialCommunityIcons
+              name="food-variant"
+              size={40}
+              color="#eaeaea"
+            />
+          ) : (
+            <MaterialIcons name="healing" size={40} color="#eaeaea" />
+          )}
         </View>
 
         <View className="flex-1 justify-center px-4">
@@ -26,7 +52,7 @@ export function CareListItem({ title, description, href }: ListItemProps) {
             ellipsizeMode="tail"
             numberOfLines={1}
           >
-            Medicamento Higiene Alimentação
+            {title}
           </Text>
 
           {/* description */}
@@ -35,10 +61,7 @@ export function CareListItem({ title, description, href }: ListItemProps) {
             ellipsizeMode="tail"
             numberOfLines={2}
           >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
-            rem consequatur nisi culpa iusto, dolorum minima vero. Sunt eligendi
-            nisi accusamus necessitatibus, corporis itaque commodi illo. Minima
-            doloribus fugit impedit.
+            {description}
           </Text>
         </View>
       </TouchableOpacity>
