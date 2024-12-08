@@ -21,9 +21,7 @@ export default function Register() {
     try {
       setIsLoading(true)
 
-      const { data } = await api.post('/caregivers', formData)
-
-      console.log(data)
+      await api.post('/caregivers', formData)
 
       toast.show({
         description:
