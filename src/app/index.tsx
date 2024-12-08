@@ -10,9 +10,7 @@ export default function SignIn() {
   const { caregiver } = useAuth()
 
   if (caregiver.name) {
-    Redirect({
-      href: '/(tabs)',
-    })
+    return <Redirect href="/(tabs)" />
   }
 
   return (
@@ -27,7 +25,7 @@ export default function SignIn() {
       </View>
 
       <Text className="px-5 text-center font-body text-lg text-gray-50">
-        Entre ou cadastre-se utilizando uma conta Google já existente
+        Entre ou cadastre-se utilizando um e-mail que você já tem criado!
       </Text>
 
       <View>
