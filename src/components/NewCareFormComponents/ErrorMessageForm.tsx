@@ -7,7 +7,7 @@ type ErrorMessageForm = {
 
 function ErrorMessageForm({ children }: ErrorMessageForm) {
   return (
-    <Text className="mt-2 w-auto flex-wrap font-body text-sm text-[#e83f5b]">
+    <Text className="mt-2 w-auto flex-wrap font-body text-sm text-primaryRed">
       {children}
     </Text>
   )
