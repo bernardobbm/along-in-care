@@ -16,6 +16,30 @@ export function DefaultForm({ children }: DefaultForm) {
 
   return (
     <>
+      <Form.Field>
+        <Form.Label>Título:</Form.Label>
+        <Form.TextInput
+          name="title"
+          placeholder="Digite um título para o cuidado"
+        />
+      </Form.Field>
+
+      <Form.Field>
+        <Form.Label>Descrição:</Form.Label>
+        <Form.TextInput
+          name="description"
+          placeholder="Descreva o processo deste cuidado"
+        />
+      </Form.Field>
+
+      {children}
+
+      <Form.Field>
+        <Form.Label>Realizar o cuidado:</Form.Label>
+
+        <ScheduleFrequency />
+      </Form.Field>
+
       <Form.TwoColumnField>
         <Form.Field>
           <Form.Label>Periodicidade:</Form.Label>
@@ -40,28 +64,6 @@ export function DefaultForm({ children }: DefaultForm) {
       )}
 
       <Form.Field>
-        <Form.Label>Título:</Form.Label>
-        <Form.TextInput
-          name="title"
-          placeholder="Digite um título para o cuidado"
-        />
-      </Form.Field>
-
-      <Form.Field>
-        <Form.Label>Descrição:</Form.Label>
-        <Form.TextInput
-          name="description"
-          placeholder="Descreva o processo deste cuidado"
-        />
-      </Form.Field>
-
-      <Form.Field>
-        <Form.Label>Realizar o cuidado:</Form.Label>
-
-        <ScheduleFrequency />
-      </Form.Field>
-
-      <Form.Field>
         <Form.Label>Este cuidado é contínuo?</Form.Label>
         <Form.IsContinuous />
       </Form.Field>
@@ -79,8 +81,6 @@ export function DefaultForm({ children }: DefaultForm) {
           </Form.Field>
         )}
       </Form.TwoColumnField>
-
-      {children}
     </>
   )
 }
