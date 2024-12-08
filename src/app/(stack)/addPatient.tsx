@@ -4,23 +4,66 @@ import { useRouter } from 'expo-router'
 import { Formik } from 'formik'
 import { SafeAreaView, Text, View } from 'react-native'
 
+import { Spinner, useToast } from 'native-base'
+import { useState } from 'react'
 import { SelectDateOfBirth } from '../../components/AddPatientComponents/SelectDateOfBirth'
 import { SelectGender } from '../../components/AddPatientComponents/SelectGender'
-import { Button } from '../../components/Button'
 import { Header } from '../../components/Header'
 import { HeaderButton } from '../../components/HeaderButton'
 import { Input } from '../../components/Input'
 import { Form } from '../../components/NewCareFormComponents'
+import { api } from '../../libs/api'
 import { AddPatientDataType } from '../../shared/interfaces/add-patient-form-data-type'
+import { PatientDataAxiosResponse } from '../../shared/interfaces/patient-data-axios-response'
+import { storageCaregiverUpdateInfo } from '../../storage/storageCaregiver'
+import { AppError } from '../../utils/AppError'
 import { addPatientFormSchema } from '../../validations/add-patient-form-fields-validation'
 
+interface AddPatientResponse {
+  patient: PatientDataAxiosResponse
+}
+
 export default function AddPatient() {
+  const [isLoading, setIsLoading] = useState(false)
+
   const router = useRouter()
+  const toast = useToast()
 
-  function handleAddPatient(formData: AddPatientDataType) {
-    console.log(formData)
+  async function handleAddPatient(
+    formData: AddPatientDataType,
+    resetForm: () => void,
+  ) {
+    try {
+      setIsLoading(true)
 
-    router.back()
+      const { data } = await api.post<AddPatientResponse>('/patient', {
+        ...formData,
+      })
+
+      await storageCaregiverUpdateInfo({ patient: data.patient.id })
+
+      toast.show({
+        description: 'Paciente cadastrado com sucesso!',
+        placement: 'top',
+        bgColor: 'green.700',
+      })
+
+      resetForm()
+      router.replace('/(tabs)')
+    } catch (err) {
+      if (err instanceof AppError) {
+        if (!toast.isActive(err.message)) {
+          toast.show({
+            description: err.message,
+            placement: 'top',
+            bgColor: 'danger.700',
+            id: err.message,
+          })
+        }
+      }
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -32,7 +75,7 @@ export default function AddPatient() {
         gender: 'feminino',
         dateOfBirth: null,
       }}
-      onSubmit={handleAddPatient}
+      onSubmit={(values, { resetForm }) => handleAddPatient(values, resetForm)}
     >
       {({ values, handleChange, errors, touched, handleSubmit }) => (
         <SafeAreaView className="flex-1 justify-between bg-gray-900">
@@ -91,15 +134,20 @@ export default function AddPatient() {
             </View>
           </View>
 
-          <Button
-            className="mb-16 self-center"
+          <Form.AffirmativeButton
+            extraClasses="mb-16 self-center"
             color="confirm"
             onPress={() => handleSubmit()}
+            disabled={isLoading}
           >
-            <Text className="font-body_semibold text-base text-gray-50">
-              Adicionar
-            </Text>
-          </Button>
+            {isLoading ? (
+              <Spinner size={'lg'} color="#eaeaea" />
+            ) : (
+              <Text className="font-body_semibold text-base text-gray-50">
+                Adicionar
+              </Text>
+            )}
+          </Form.AffirmativeButton>
         </SafeAreaView>
       )}
     </Formik>
