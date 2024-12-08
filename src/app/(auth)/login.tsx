@@ -23,7 +23,13 @@ export default function Login() {
     try {
       setIsLoading(true)
 
-      await signIn(formData.email, formData.password)
+      await signIn(formData.email.trim(), formData.password)
+
+      toast.show({
+        description: 'Bem-vindo de volta!',
+        placement: 'top',
+        bgColor: 'green.700',
+      })
 
       router.replace('/(tabs)')
     } catch (err) {
@@ -36,9 +42,9 @@ export default function Login() {
             id: err.message,
           })
         }
-
-        setIsLoading(false)
       }
+    } finally {
+      setIsLoading(false)
     }
   }
 
