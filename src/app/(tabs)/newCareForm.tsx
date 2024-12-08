@@ -2,6 +2,8 @@ import { AntDesign } from '@expo/vector-icons'
 import dayjs from 'dayjs'
 import { useRouter } from 'expo-router'
 import { Formik } from 'formik'
+import { Spinner, useToast } from 'native-base'
+import { useState } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 
 import { AlimentationForm } from '../../components/CareTypeForms/AlimentationForm'
@@ -11,14 +13,26 @@ import { MedicationForm } from '../../components/CareTypeForms/MedicationForm'
 import { Header } from '../../components/Header'
 import { HeaderButton } from '../../components/HeaderButton'
 import { Form } from '../../components/NewCareFormComponents'
+import { useAuth } from '../../hooks/useAuth'
+import { api } from '../../libs/api'
 import { NewCareFormData } from '../../shared/interfaces/new-care-form-data-type'
 import { newCareFormInitialValues } from '../../shared/new-care-form-initial-values'
+import { AppError } from '../../utils/AppError'
 import { newCareFormSchema } from '../../validations/new-care-form-fields-validation'
 
 export default function NewCareForm() {
-  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
 
-  function handleNewCareFormSubmit(formData: Partial<NewCareFormData>) {
+  const {
+    caregiver: { patient },
+  } = useAuth()
+  const router = useRouter()
+  const toast = useToast()
+
+  async function handleNewCareFormSubmit(
+    formData: Partial<NewCareFormData>,
+    resetForm: () => void,
+  ) {
     if (formData.category === 'medicação') {
       delete formData.alimentation
       delete formData.hygiene
@@ -52,13 +66,44 @@ export default function NewCareForm() {
       formData.endsAt = null
     }
 
-    console.log(JSON.stringify(formData, null, 2))
+    try {
+      setIsLoading(true)
+
+      await api.post('/cares/create', {
+        patientId: patient,
+        ...formData,
+      })
+
+      toast.show({
+        description: 'Novo cuidado cadastrado!',
+        placement: 'top',
+        bgColor: 'green.700',
+      })
+
+      resetForm()
+      router.replace('/(tabs)')
+    } catch (err) {
+      if (err instanceof AppError) {
+        if (!toast.isActive(err.message)) {
+          toast.show({
+            description: err.message,
+            placement: 'top',
+            bgColor: 'danger.700',
+            id: err.message,
+          })
+        }
+      }
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
     <Formik
       initialValues={newCareFormInitialValues}
-      onSubmit={handleNewCareFormSubmit}
+      onSubmit={(values, { resetForm }) =>
+        handleNewCareFormSubmit(values, resetForm)
+      }
       validationSchema={newCareFormSchema}
     >
       {({ values, resetForm, handleSubmit }) => (
@@ -85,7 +130,7 @@ export default function NewCareForm() {
                     'Medicação',
                     'Higiene',
                     'Recomendações Alimentares',
-                    'Outro',
+                    'Outros',
                   ]}
                 />
               </Form.Field>
@@ -118,10 +163,15 @@ export default function NewCareForm() {
             <Form.AffirmativeButton
               color="confirm"
               onPress={() => handleSubmit()}
+              disabled={isLoading}
             >
-              <Text className="font-body_semibold text-base text-gray-50">
-                Adicionar
-              </Text>
+              {isLoading ? (
+                <Spinner size={'lg'} color="#eaeaea" />
+              ) : (
+                <Text className="font-body_semibold text-base text-gray-50">
+                  Adicionar
+                </Text>
+              )}
             </Form.AffirmativeButton>
           </Form.ButtonField>
         </View>
