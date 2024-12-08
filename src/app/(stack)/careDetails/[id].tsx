@@ -13,7 +13,7 @@ import { Header } from '../../../components/Header'
 import { HeaderButton } from '../../../components/HeaderButton'
 import { Form } from '../../../components/NewCareFormComponents'
 import { useCareDetailData } from '../../../hooks/care/useCareDetailData'
-import { shouldBeAdministeredToday } from '../../../utils/should-be-administred-today'
+import { shouldBeAdministeredToday } from '../../../utils/should-be-administered-today'
 import { verifyIfIsInAValidInterval } from '../../../utils/verify-if-is-in-a-valid-interval'
 
 export default function CareDetails() {
