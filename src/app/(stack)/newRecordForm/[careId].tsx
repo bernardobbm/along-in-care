@@ -1,23 +1,69 @@
 import { AntDesign } from '@expo/vector-icons'
-import { useRouter } from 'expo-router'
+import { useLocalSearchParams, useRouter } from 'expo-router'
 import { Formik } from 'formik'
 import { ScrollView, Text, View } from 'react-native'
 
-import { Button } from '../../components/Button'
-import { Header } from '../../components/Header'
-import { HeaderButton } from '../../components/HeaderButton'
-import { Input } from '../../components/Input'
-import { Form } from '../../components/NewCareFormComponents'
-import { SelectCareAccomplishment } from '../../components/NewRecordFormComponents/SelectCareAccomplishment'
-import { NewRecordFormDataType } from '../../shared/interfaces/new-record-form-data-type'
-import { newRecordFormInitialValues } from '../../shared/new-record-form-initial-values'
-import { newRecordFormSchema } from '../../validations/new-record-form-fields-validation'
+import { useToast } from 'native-base'
+import { Button } from '../../../components/Button'
+import { Header } from '../../../components/Header'
+import { HeaderButton } from '../../../components/HeaderButton'
+import { Input } from '../../../components/Input'
+import { Form } from '../../../components/NewCareFormComponents'
+import { SelectCareAccomplishment } from '../../../components/NewRecordFormComponents/SelectCareAccomplishment'
+import { useCareDetailData } from '../../../hooks/care/useCareDetailData'
+import { api } from '../../../libs/api'
+import { NewRecordFormDataType } from '../../../shared/interfaces/new-record-form-data-type'
+import { newRecordFormInitialValues } from '../../../shared/new-record-form-initial-values'
+import { AppError } from '../../../utils/AppError'
+import { newRecordFormSchema } from '../../../validations/new-record-form-fields-validation'
 
 export default function NewRecordForm() {
   const router = useRouter()
 
-  function handleNewRecordFormSubmit(formData: NewRecordFormDataType) {
-    console.log(formData)
+  const toast = useToast()
+
+  const { careId } = useLocalSearchParams()
+
+  const { data } = useCareDetailData(careId as string)
+
+  if (!careId || !data) {
+    toast.show({
+      description: 'Algo deu errado, tente novamente mais tarde!',
+      placement: 'top',
+      bgColor: 'danger.700',
+    })
+
+    return router.back()
+  }
+
+  async function handleNewRecordFormSubmit(formData: NewRecordFormDataType) {
+    try {
+      await api.post(`/records/${careId}`, {
+        ...formData,
+        timeOfAccomplishment: new Date(),
+      })
+
+      toast.show({
+        description: 'Registro criado com sucesso',
+        placement: 'top',
+        bgColor: 'green.700',
+      })
+
+      router.push('/(tabs)/records')
+    } catch (err) {
+      if (err instanceof AppError) {
+        if (!toast.isActive(err.message)) {
+          toast.show({
+            description: err.message,
+            placement: 'top',
+            bgColor: 'danger.700',
+            id: err.message,
+          })
+        }
+
+        router.back()
+      }
+    }
   }
 
   return (
@@ -47,7 +93,7 @@ export default function NewRecordForm() {
             <Form.Field>
               <Form.Label>Cuidado:</Form.Label>
               <Text className="font-body text-2xl text-gray-50">
-                Nome do cuidado
+                {data?.care.title}
               </Text>
             </Form.Field>
 
@@ -60,7 +106,7 @@ export default function NewRecordForm() {
               <Form.Label>Descrição:</Form.Label>
               <Input
                 multiline
-                placeholder="Descreva como foi a realização do cuidado"
+                placeholder="Descreva como foi a realização"
                 error={!!(errors.description && touched.description)}
                 errorMessage={errors.description}
                 value={values.description}
