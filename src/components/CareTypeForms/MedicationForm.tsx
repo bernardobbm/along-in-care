@@ -25,7 +25,7 @@ export function MedicationForm() {
         <Form.Field>
           <Form.Label>Unidade de medida:</Form.Label>
           <Form.MedicationForm.SelectUnit
-            units={['ml', 'comprimido(s)', 'camada(s)']}
+            units={['ml', 'comprimido(s)', 'camada(s)', 'gotas']}
           />
         </Form.Field>
       </Form.TwoColumnField>
