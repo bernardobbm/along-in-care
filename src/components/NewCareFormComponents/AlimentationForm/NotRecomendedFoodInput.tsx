@@ -21,8 +21,8 @@ export function NotRecommendedFoodInput({ ...rest }: NotRecommendedFoodProps) {
             : 'border-gray-400'
         }`}
         multiline
-        value={values.alimentation.food}
-        onChangeText={handleChange('alimentation.food')}
+        value={values.alimentation.notRecommendedFood}
+        onChangeText={handleChange('alimentation.notRecommendedFood')}
         cursorColor={'#eaeaea'}
         placeholderTextColor={'#56565a'}
         onContentSizeChange={(event) =>
@@ -32,9 +32,10 @@ export function NotRecommendedFoodInput({ ...rest }: NotRecommendedFoodProps) {
         {...rest}
       />
 
-      {errors.alimentation?.food && touched.alimentation?.food && (
-        <ErrorMessage>{errors.alimentation.food}</ErrorMessage>
-      )}
+      {errors.alimentation?.notRecommendedFood &&
+        touched.alimentation?.notRecommendedFood && (
+          <ErrorMessage>{errors.alimentation.notRecommendedFood}</ErrorMessage>
+        )}
     </View>
   )
 }
