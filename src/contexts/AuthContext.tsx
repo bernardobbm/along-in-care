@@ -42,16 +42,21 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   async function storageCaregiverAndTokenSave(
     caregiverData: CaregiverDTO,
     token: string,
+    refreshToken: string,
   ) {
     await storageCaregiverSave(caregiverData)
-    await storageAuthTokenSave(token)
+    await storageAuthTokenSave({ token, refresh_token: refreshToken })
   }
 
   async function signIn(email: string, password: string) {
     const { data } = await api.post('/sessions', { email, password })
 
-    if (data.caregiver && data.token) {
-      await storageCaregiverAndTokenSave(data.caregiver, data.token)
+    if (data.caregiver && data.token && data.refreshToken) {
+      await storageCaregiverAndTokenSave(
+        data.caregiver,
+        data.token,
+        data.refreshToken,
+      )
       caregiverAndTokenUpdate(data.caregiver, data.token)
     }
   }
@@ -71,7 +76,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   const loadCaregiverData = async () => {
     const caregiverLogged = await storageCaregiverGet()
-    const token = await storageAuthTokenGet()
+    const { token } = await storageAuthTokenGet()
 
     if (caregiverLogged && token) {
       caregiverAndTokenUpdate(caregiverLogged, token)
