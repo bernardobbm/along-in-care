@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios'
+import { env } from '../env'
 import {
   storageAuthTokenGet,
   storageAuthTokenSave,
@@ -17,7 +18,7 @@ type APIInstanceProps = AxiosInstance & {
 }
 
 const api = axios.create({
-  baseURL: `http://192.168.1.3:3333/`,
+  baseURL: env.API_URL,
 }) as APIInstanceProps
 
 let failedQueue: PromiseType[] = []
