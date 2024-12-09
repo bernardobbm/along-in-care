@@ -5,7 +5,6 @@ import { ScrollView, Text, View } from 'react-native'
 import { useToast } from 'native-base'
 import { RefreshControl } from 'react-native-gesture-handler'
 import { Header } from '../../components/Header'
-import { LinkUpAPatient } from '../../components/LinkUpAPatient'
 import { NoItemsRegistered } from '../../components/NoItemsRegistered'
 import { RecordListItem } from '../../components/RecordListItem'
 import { SelectCategoryFilter } from '../../components/SelectCategoryFilter'
@@ -17,9 +16,7 @@ import { capitalizeCategory } from './prescriptions'
 export default function Records() {
   const { caregiver } = useAuth()
 
-  const { data, refetch, isLoading, error } = useRecordsData(
-    caregiver.patient ?? '',
-  )
+  const { data, refetch, isLoading } = useRecordsData(caregiver.patient ?? '')
 
   useRefreshOnFocus(refetch)
 
@@ -31,10 +28,6 @@ export default function Records() {
 
   function handleSetFilter(filter: string | null) {
     setFilter(filter)
-  }
-
-  if (error) {
-    return <LinkUpAPatient />
   }
 
   return (

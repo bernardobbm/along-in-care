@@ -15,10 +15,6 @@ export function useRecordsData(patientId: string) {
     return data
   }
 
-  if (patientId === '') {
-    throw Error('Sem paciente cadastrado!')
-  }
-
   const query = useQuery({
     queryKey: ['recordsData'],
     queryFn: fetchRecordsData,
